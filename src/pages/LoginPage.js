@@ -7,12 +7,6 @@ import '../App.css';
 export const LoginPage = () => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-    });}, [])
 
   const login = async () => {
     try {
@@ -23,9 +17,14 @@ export const LoginPage = () => {
       );
       console.log(user);
       document.getElementById("status").innerHTML = user;
+      this.history.replace('../dashboard');
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const forgot = async () => {
+    alert("Feature Not Implemented Yet");
   };
 
   const logout = async () => {
@@ -40,26 +39,25 @@ export const LoginPage = () => {
       <div >
         <h3> Login </h3>
         <div>
-          <label class='label' >Email Adress</label>
-        </div>
-        <div>
         <input  
               class='input'
-          placeholder="Your Email Address"
+          placeholder="Your Username"
           onChange={(event) => {
             setLoginEmail(event.target.value);
           }}
         />
-        </div>
-        <div>
-          <label class='label' >Password</label>
+        <br></br>
+        <button class='forgotButton' onClick={forgot}> Forgot Username?</button>
         </div>
         <input class='input'
+                    type="password"
           placeholder="Your Strong Password"
           onChange={(event) => {
             setLoginPassword(event.target.value);
           }}
         />
+        <br></br>
+        <button class='forgotButton' onClick={forgot}> Forgot Password?</button>
         <br></br>
         <button class='homeButton' onClick={login}> Login</button>
       </div>
@@ -68,8 +66,6 @@ export const LoginPage = () => {
         <a class='homeButton' id='link' href='../register' >Register New User</a>
       </div>
       <br></br>
-      <p> Currently Logged In: </p>
-      <span>{user ? user.email : "[No User Logged In]"}</span>
         <br></br>
         <br></br>
       <button class='homeButton' onClick={logout}> Sign Out </button>

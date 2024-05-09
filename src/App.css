@@ -40,7 +40,7 @@
 /* CSS */
 .homeButton{
   appearance: none;
-  background-color: #4c4f4d;
+  background-color: #256eaa;
   border: 1px solid rgba(27, 31, 35, .15);
   border-radius: 6px;
   box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
@@ -53,6 +53,7 @@
   font-weight: 600;
   line-height: 20px;
   padding: 6px 16px;
+  margin-top:  25px;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -70,7 +71,7 @@
 }
 
 .homeButton:hover {
-  background-color: #4c4f4d;
+  background-color: #256eaa;
 }
 
 .homeButton:focus {
@@ -79,19 +80,73 @@
 }
 
 .homeButton:disabled {
-  background-color: #4c4f4d;
+  background-color: #256eaa;
   border-color: rgba(27, 31, 35, .1);
   color: rgba(255, 255, 255, .8);
   cursor: default;
 }
 
 .homeButton:active {
-  background-color: #4c4f4d;
+  background-color: #256eaa;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+
+.forgotButton{
+  appearance: none;
+  background-color: #256eaa;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 8px;
+  font-weight: 600;
+  line-height: 8px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: auto;
+  height: 20px;
+  margin-right: 80px;
+}
+
+.forgotButton:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.forgotButton:hover {
+  background-color: #256eaa;
+}
+
+.forgotButton:focus {
+  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+  outline: none;
+}
+
+.forgotButton:disabled {
+  background-color: #256eaa;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.forgotButton:active {
+  background-color: #256eaa;
   box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
 }
 
 .loginForm{
-  background-color: #8a8e8b;
+  background-color: #4c4f4d;
   width: 500px;
   font-size: calc(7px + 2vmin);
   height: 750px;
@@ -110,9 +165,22 @@
   outline-offset: 3px;
   padding: 10px 1rem;
   transition: 0.25s;
+  height: 10px;
+  margin-top: 20px;
 }
 
 .input:focus {
   outline-offset: 5px;
   background-color: #fff
+}
+
+.notFound{
+  background-color: #4c4f4d;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
