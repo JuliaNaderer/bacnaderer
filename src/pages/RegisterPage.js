@@ -35,25 +35,33 @@ export const RegisterPage = () => {
     return (
       <div className="App">
         <header  className="App-header">
+        <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX3hKyiwNNgjWddQ-Ur9Q1gn_ukmOEfTgkrQAUnDiztQ&s'></img>
+        <div class='loginForm'>
         <div>
             <h3> Register User </h3>
-            <input
+            <div>
+              <label class='label' >Email Adress</label>
+          </div>
+            <input class='input'
             placeholder="Email..."
             onChange={(event) => {
                 setRegisterEmail(event.target.value);
             }}
             />
             <br></br>
-            <input
-            placeholder="Password..."
+            <div>
+              <label class='label' >Password</label>
+          </div>
+            <input class='input'
+            placeholder="Your Strong Password"
             onChange={(event) => {
                 setRegisterPassword(event.target.value);
             }}
             />
             <br></br>
-            <button onClick={register}> Register User</button>
+            <button class='homeButton' onClick={register}> Register</button>
             <br></br>
-            <a id='link' href="./"> Back To Login</a>
+            <a class='homeButton' id='link' href="../login"> Back To Login</a>
             <br></br>
             <br></br>
             <p id="status"></p>
@@ -62,7 +70,8 @@ export const RegisterPage = () => {
           <p> Currently Logged In: </p>
         <span>{user ? user.email : "[No User Logged In]"}</span>
         <br></br>
-        <button onClick={logout}> Sign Out </button>
+        <button class='homeButton' onClick={logout}> Sign Out </button>
+        </div>
         </header>
       </div>
     );

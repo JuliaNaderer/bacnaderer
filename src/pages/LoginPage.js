@@ -3,7 +3,6 @@ import {onAuthStateChanged, signInWithEmailAndPassword, signOut} from "firebase/
 import {} from "firebase/auth";
 import {auth} from "../firebase.js";
 import '../App.css';
-import { RegisterPage } from './RegisterPage.js';
 
 export const LoginPage = () => {
   const [loginEmail, setLoginEmail] = useState("");
@@ -36,32 +35,45 @@ export const LoginPage = () => {
   return (
     <div className="App">
       <header  className="App-header">
-      <div>
+      <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX3hKyiwNNgjWddQ-Ur9Q1gn_ukmOEfTgkrQAUnDiztQ&s'></img>
+      <div class='loginForm'>
+      <div >
         <h3> Login </h3>
-        <input
-          placeholder="Email..."
+        <div>
+          <label class='label' >Email Adress</label>
+        </div>
+        <div>
+        <input  
+              class='input'
+          placeholder="Your Email Address"
           onChange={(event) => {
             setLoginEmail(event.target.value);
           }}
         />
-        <br></br>
-        <input
-          placeholder="Password..."
+        </div>
+        <div>
+          <label class='label' >Password</label>
+        </div>
+        <input class='input'
+          placeholder="Your Strong Password"
           onChange={(event) => {
             setLoginPassword(event.target.value);
           }}
         />
         <br></br>
-        <button onClick={login}> Login</button>
+        <button class='homeButton' onClick={login}> Login</button>
       </div>
+      <br></br>
       <div>
-        <a id='link' href='../register' >Register</a>
+        <a class='homeButton' id='link' href='../register' >Register New User</a>
       </div>
       <br></br>
       <p> Currently Logged In: </p>
       <span>{user ? user.email : "[No User Logged In]"}</span>
         <br></br>
-      <button onClick={logout}> Sign Out </button>
+        <br></br>
+      <button class='homeButton' onClick={logout}> Sign Out </button>
+      </div>
       </header>
     </div>
   );
