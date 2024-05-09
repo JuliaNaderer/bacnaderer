@@ -52,7 +52,6 @@ function App() {
           }}/>
           <button onClick={register}>Create User</button>
         </div>
-
         <div>
         <h3> Login User</h3>
         <input placeholder = "Email"
