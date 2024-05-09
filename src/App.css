@@ -117,6 +117,7 @@
   width: auto;
   height: 20px;
   margin-right: 80px;
+  margin-top: 10px;
 }
 
 .forgotButton:focus:not(:focus-visible):not(.focus-visible) {

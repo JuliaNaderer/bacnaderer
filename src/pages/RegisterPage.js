@@ -51,12 +51,13 @@ export const RegisterPage = () => {
             <button class='homeButton' onClick={register}> Register</button>
             <br></br>
             <br></br>
+            <br></br>
+            <br></br>
             <a class='homeButton' id='link' href="../login"> Back To Login</a>
             <br></br>
             <br></br>
             <p id="status"></p>
             </div>
-        <br></br>
         <br></br>
         <button class='homeButton' onClick={logout}> Sign Out </button>
         </div>
