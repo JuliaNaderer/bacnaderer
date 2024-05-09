@@ -55,11 +55,11 @@ export const LoginPage = () => {
         <button onClick={login}> Login</button>
       </div>
       <div>
-        <a href='../register' >Register</a>
+        <a id='link' href='../register' >Register</a>
       </div>
-
+      <br></br>
       <p> Currently Logged In: </p>
-      <span>{user ? user.email : "Not Logged In"}</span>
+      <span>{user ? user.email : "[No User Logged In]"}</span>
         <br></br>
       <button onClick={logout}> Sign Out </button>
       </header>

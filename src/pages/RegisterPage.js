@@ -53,13 +53,14 @@ export const RegisterPage = () => {
             <br></br>
             <button onClick={register}> Register User</button>
             <br></br>
+            <a id='link' href="./"> Back To Login</a>
+            <br></br>
             <br></br>
             <p id="status"></p>
             </div>
   
-        <h4> User Logged In: </h4>
-        {user ? user.email : "Not Logged In"}
-        <br></br>
+          <p> Currently Logged In: </p>
+        <span>{user ? user.email : "[No User Logged In]"}</span>
         <br></br>
         <button onClick={logout}> Sign Out </button>
         </header>
