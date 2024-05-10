@@ -212,3 +212,12 @@
   display: flex;
   margin-right: 270px;
 }
+
+#loginstatus{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(5px + 1vmin);
+  color:rgb(130, 10, 10)
+}

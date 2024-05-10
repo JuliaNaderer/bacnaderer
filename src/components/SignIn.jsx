@@ -11,7 +11,24 @@ export const SignIn = () => {
   const history = useHistory();
 
   const login = async () => {
+
+      var loginStatus = document.getElementById("loginstatus");
+      loginStatus.innerHTML = "";
     try {
+
+      if(loginEmail === "" && loginPassword === ""){
+        loginStatus.innerHTML = "Empty User Credentials";
+      }
+      else if (loginPassword === "")
+      {
+        loginStatus.innerHTML = "Empty Password Field";
+      }
+      else if (loginEmail === "")
+      {
+        loginStatus.innerHTML = "Empty Password Field";
+      }
+      else{
+
       const user = await signInWithEmailAndPassword(
         auth,
         loginEmail,
@@ -19,8 +36,9 @@ export const SignIn = () => {
       );
       console.log(user);
       history.push("/mobileOtp");
-    } catch (error) {
+    }}catch (error) {
       console.log(error.message);
+      loginStatus.innerHTML = "Invalid User Credentials"
     }
   };
 
@@ -32,12 +50,12 @@ export const SignIn = () => {
     <div className="App">
       <header  className="App-header">
       <img src='../puk.png' alt="puk1"></img>
-      <div class='loginForm'>
-        <div >
+      <div className="loginForm">
+        <div > 
             <h3> Login </h3>
             <div>
             <input  
-                class='input'
+                className="input"
             placeholder="Email"
             onChange={(event) => {
                 setLoginEmail(event.target.value);
@@ -45,7 +63,7 @@ export const SignIn = () => {
             />
             <br></br>
             </div>
-            <input class='input'
+            <input className="input"
                         type="password"
             placeholder="Password"
             onChange={(event) => {
@@ -53,10 +71,13 @@ export const SignIn = () => {
             }}
             />
             <br></br>
-            <button class='forgotButton' onClick={forgot}> Forgot Password ?</button>
+            <button className="forgotButton" onClick={forgot}> Forgot Password ?</button>
             <br></br>
             <br></br>
-            <button class='homeButton' onClick={login}> Login</button>
+            <div id="loginstatus">   </div>
+            <br></br>
+            <br></br>
+            <button className="homeButton" onClick={login}> Login</button>
         </div>
         </div>
       </header>

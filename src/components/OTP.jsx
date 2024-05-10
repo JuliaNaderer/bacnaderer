@@ -10,19 +10,19 @@ export const OTP = () => {
         <div className="App">
         <header  className="App-header">
         <img src='../puk.png' alt="puk1"></img>
-        <div class='loginForm'>
+        <div className='loginForm'>
         <div>
             <h3> Enter 6-Digit Code</h3>
-            <label class='otpInput'>
+            <label className='otpInput'>
                 <OtpInput value={otp} onChange={setOtp} OTPLength={6} otpType="number" disabled={false} className="otp-container"
                 ></OtpInput>
             </label>
             <br></br>
-            <button class='homeButton'>Verify OTP</button>
+            <button className='homeButton'>Verify Code</button>
             <br></br>
-            <button class='homeButton'>Re-Send Code</button>
+            <button className='homeButton'>Re-Send Code</button>
             <br></br>
-            <a class='homeButton' id='link' href="../mobileOtp"> Edit Phone Number</a>
+            <a className='homeButton' id='link' href="../mobileOtp"> Edit Phone Number</a>
             <br></br>
             <br></br>
             <p id="status"></p>

@@ -19,7 +19,7 @@ export const Dashboard = () => {
     <header className="notFound">
         <h1>This works</h1>
         <p> Hello: {user ? user.email : "[No User Logged In]"}</p>
-        <a class='homeButton' id='link' href="../login"> Back To Login</a>
+        <a className='homeButton' id='link' href="../login"> Back To Login</a>
     </header>
 </html>
     );

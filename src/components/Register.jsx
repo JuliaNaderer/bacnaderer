@@ -26,17 +26,17 @@ export const Register = () => {
       <div className="App">
         <header  className="App-header">
         <img src='../puk.png' alt="puk1"></img>
-        <div class='loginForm'>
+        <div className="loginForm">
         <div>
             <h3> Register User </h3>
-            <input class='input'
+            <input className="input"
             placeholder="Your Email Address"
             onChange={(event) => {
                 setRegisterEmail(event.target.value);
             }}
             />
             <br></br>
-            <input class='input'
+            <input className="input"
             type="password"
             placeholder="Your Strong Password"
             onChange={(event) => {
@@ -44,12 +44,12 @@ export const Register = () => {
             }}
             />
             <br></br>
-            <button class='homeButton' onClick={register}> Register</button>
+            <button className="homeButton" onClick={register}> Register</button>
             <br></br>
             <br></br>
             <br></br>
             <br></br>
-            <a class='homeButton' id='link' href="../login"> Back To Login</a>
+            <a className="homeButton" id='link' href="../login"> Back To Login</a>
             <br></br>
             <br></br>
             <p id="status"></p>

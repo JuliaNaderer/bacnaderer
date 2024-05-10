@@ -7,9 +7,9 @@ export const Home = () => {
         <img src='../puk.png' alt="puk3"></img>
         <br></br>
         <br></br>
-      <a class='homeButton' href='../login' >Login</a>
+      <a className='homeButton' href='../login' >Login</a>
         <br></br>
-      {/*<a class='homeButton' href='../register' >Register</a>*/}
+      {/*<a className='homeButton' href='../register' >Register</a>*/}
       </header>
         </div>
     )

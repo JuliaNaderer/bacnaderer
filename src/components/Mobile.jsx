@@ -16,14 +16,14 @@ export const Mobile = () => {
     <div className="App">
     <header  className="App-header">
     <img src='../puk.png' alt="puk1"></img>
-    <div class='loginForm'>
+    <div className='loginForm'>
     <div>
-        <h3> Enter 6-Digit Code</h3>
+        <h3> Enter your Phone Number</h3>
         <PhoneInput country={"in"} value={phonenr} onChange={setPhoneNr} className="phoneInput"></PhoneInput>
         <br></br>
-        <button class='homeButton' onClick={sendCode}>Send SMS</button>
+        <button className='homeButton' onClick={sendCode}>Send SMS</button>
         <br></br>
-        <a class='homeButton' id='link' href="../login"> Go Back To Login</a>
+        <a className='homeButton' id='link' href="../login"> Go To Login</a>
         <br></br>
         <br></br>
         <p id="status"></p>

@@ -12,7 +12,7 @@ export const SignOut = () => {
   return (
     <div className="App">
       <br></br>
-      <button class='homeButton' onClick={logout}> Sign Out </button>
+      <button className="homeButton" onClick={logout}> Sign Out </button>
     </div>
   );
 }
