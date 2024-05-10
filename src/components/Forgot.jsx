@@ -22,22 +22,20 @@ export const Forgot = () => {
     return (
       <div className="App">
         <header  className="App-header">
-        <img src='../puk.png' alt="puk2"></img>
+        <a href="./login"><img src='../puk.png' alt="puk2"></img></a>
         <div className='loginForm'>
         <div>
             <h3> Forgot Password</h3>
             <input id="forgotInput" className='input' onChange={(event) => {
                 setForgotEmail(event.target.value);
             }}
-            placeholder="Your Email Address"
+            placeholder="Email To Reset PW"
             />
             <br></br>
-            <button className='homeButton' onClick={() => ForogotPassword()}>Send Email</button>
+            <button className='homeButton' onClick={() => ForogotPassword()}>Reset Password</button>
             <br></br>
             <a className='homeButton' id='link' href="../login"> Back To Login</a>
             <br></br>
-            <br></br>
-            <p id="status"></p>
             </div>
         </div>
         </header>

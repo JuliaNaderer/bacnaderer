@@ -15,7 +15,7 @@ export const Mobile = () => {
   return (
     <div className="App">
     <header  className="App-header">
-    <img src='../puk.png' alt="puk1"></img>
+    <a href="./login"><img src='../puk.png' alt="puk1"></img></a>
     <div className='loginForm'>
     <div>
         <h3> Enter your Phone Number</h3>
