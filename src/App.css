@@ -51,7 +51,7 @@
   font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
   font-size: 14px;
   font-weight: 600;
-  line-height: 20px;
+  line-height: 16px;
   padding: 6px 16px;
   margin-top:  25px;
   position: relative;
@@ -62,7 +62,7 @@
   touch-action: manipulation;
   vertical-align: middle;
   white-space: nowrap;
-  width: auto;
+  width: 185px;
 }
 
 .homeButton:focus:not(:focus-visible):not(.focus-visible) {
@@ -102,7 +102,7 @@
   cursor: pointer;
   display: inline-block;
   font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 600;
   line-height: 8px;
   padding: 6px 16px;
@@ -116,7 +116,7 @@
   white-space: nowrap;
   width: auto;
   height: 20px;
-  margin-right: 80px;
+  margin-right: 70px;
   margin-top: 10px;
 }
 
@@ -147,10 +147,10 @@
 }
 
 .loginForm{
-  background-color: #4c4f4d;
+  background-color: #9f9f9f;
   width: 500px;
   font-size: calc(7px + 2vmin);
-  height: 750px;
+  height: 500px;
 }
 
 .label{
@@ -184,4 +184,31 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.otpInput {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.otp-container{
+  color: black;
+}
+
+.phoneInput{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.flag-dropdown{
+  display: flex;
+  margin-right: 270px;
 }

@@ -4,7 +4,7 @@ import {} from "firebase/auth";
 import {auth} from "../firebase";
 import '../App.css';
 
-export const OverviewPage = () => {
+export const Dashboard = () => {
 
     const [user, setUser] = useState({});
 
@@ -19,6 +19,7 @@ export const OverviewPage = () => {
     <header className="notFound">
         <h1>This works</h1>
         <p> Hello: {user ? user.email : "[No User Logged In]"}</p>
+        <a class='homeButton' id='link' href="../login"> Back To Login</a>
     </header>
 </html>
     );

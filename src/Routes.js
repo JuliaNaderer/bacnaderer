@@ -3,7 +3,10 @@ import {LoginPage} from "./pages/LoginPage";
 import {RegisterPage} from './pages/RegisterPage';
 import {NotFoundPage} from './pages/NotFoundPage';
 import {Homepage} from './pages/Homepage';
-import {OverviewPage} from './pages/OverviewPage';
+import {DashboardPage} from './pages/DashboardPage';
+import {ForgotInformationPage} from './pages/ForgotInformationPage';
+import {OTPPage} from "./pages/OTPPage";
+import {MobileOtpPage} from "./pages/MobileOtpPage";
 
 export const Routes = () => {
     return(
@@ -18,8 +21,17 @@ export const Routes = () => {
                 <Route path="/register">
                     <RegisterPage/>
                 </Route>
-                <Route path="/overview">
-                    <OverviewPage/>
+                <Route path="/dashboard">
+                    <DashboardPage/>
+                </Route>
+                <Route path="/reset">
+                    <ForgotInformationPage/>
+                </Route>
+                <Route path="/otp">
+                    <OTPPage/>
+                </Route>
+                <Route path="/mobileOtp">
+                    <MobileOtpPage/>
                 </Route>
                 <Route>
                     <NotFoundPage/>
