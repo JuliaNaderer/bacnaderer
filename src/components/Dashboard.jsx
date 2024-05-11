@@ -19,7 +19,7 @@ export const Dashboard = () => {
         <div className="App" id="outer-container">
                 <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
                 <div id="page-wrap">
-                <h1>Welcome, {user ? user.email : "[No User Logged In]"}</h1>
+                <h1 class="welcome">Welcome, {user ? user.email : "[No User Logged In]"}</h1>
             </div>
         </div>
   );
