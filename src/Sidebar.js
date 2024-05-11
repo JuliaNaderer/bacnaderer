@@ -34,7 +34,8 @@ import {auth} from "./firebase.js";
         <a className="menu-item-bottom" href="/desserts">
           Settings
         </a>
-        <div onClick={logout} className="logoutButton"><img src="./logout.png"></img>
+        <div>
+        <a className="logoutButton" onClick={logout} href="/login">Logout</a>
         </div>
       </Menu>
     );

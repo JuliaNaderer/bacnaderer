@@ -257,5 +257,7 @@
 
 .logoutButton{
   position:fixed;
-  bottom:0px;
+  bottom:50px;
+  color:inherit;
+  text-decoration: none;
 }
