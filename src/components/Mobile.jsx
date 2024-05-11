@@ -19,7 +19,7 @@ export const Mobile = () => {
     <div className='loginForm'>
     <div>
         <h3> Enter your Phone Number</h3>
-        <PhoneInput country={"in"} value={phonenr} onChange={setPhoneNr} className="phoneInput"></PhoneInput>
+        <PhoneInput country={"ch"} value={phonenr} onChange={setPhoneNr} className="phoneInput"></PhoneInput>
         <br></br>
         <button className='homeButton' onClick={sendCode}>Send SMS</button>
         <br></br>

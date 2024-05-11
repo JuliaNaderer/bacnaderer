@@ -1,10 +1,15 @@
 import OtpInput from "otp-input-react";
+import { useHistory } from 'react-router-dom';
 import { useState } from "react";
 
-export const OTP = () => {
 
+export const OTP = () => {
+    const history = useHistory();
     const [otp, setOtp] = useState();
 
+    const login = async () => {
+        history.push("/dashboard")
+    };
 
     return(
         <div className="App">
@@ -17,15 +22,13 @@ export const OTP = () => {
                 <OtpInput value={otp} onChange={setOtp} OTPLength={6} otpType="number" disabled={false} className="otp-container"
                 ></OtpInput>
             </label>
-            <br></br>
-            <button className='homeButton'>Verify Code</button>
-            <br></br>
-            <button className='homeButton'>Re-Send Code</button>
-            <br></br>
-            <a className='homeButton' id='link' href="../mobileOtp"> Edit Phone Number</a>
+            <button className='forgotButton'>Re-Send Code</button>
             <br></br>
             <br></br>
-            <p id="status"></p>
+            <button className='homeButton' onclick={login}>Login</button>
+            <br></br>
+            {/*<a className='homeButton' id='link' href="../mobileOtp"> Edit Phone Number</a>*/}
+            <br></br>
             </div>
         </div>
         </header>

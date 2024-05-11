@@ -11,11 +11,12 @@ export const Forgot = () => {
   const ForogotPassword = () => {
       sendPasswordResetEmail(auth, forgotEmail)
       .then(() => {
-        alert("Check your incoming emails");
+        document.getElementById("emailstatus").innerHTML = "Email Sent - Check your Inbox!"
       })
       .catch((error) => {
         console.log(error.code);
         console.log(error.message);
+        document.getElementById("emailstatus").innerHTML = error.message
       })
     }
 
@@ -29,8 +30,9 @@ export const Forgot = () => {
             <input id="forgotInput" className='input' onChange={(event) => {
                 setForgotEmail(event.target.value);
             }}
-            placeholder="Email To Reset PW"
+            placeholder="john@smith.com"
             />
+            <div id="emailstatus">   </div>
             <br></br>
             <button className='homeButton' onClick={() => ForogotPassword()}>Reset Password</button>
             <br></br>

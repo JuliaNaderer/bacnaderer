@@ -164,11 +164,11 @@
   border: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color: #e2e2e2;
-  outline-offset: 3px;
+  outline-offset: 4px;
   padding: 10px 1rem;
   transition: 0.25s;
   height: 10px;
-  margin-top: 20px;
+  margin-top: 13px;
 }
 
 .input:focus {
@@ -221,4 +221,41 @@
   justify-content: center;
   font-size: calc(5px + 1vmin);
   color:rgb(130, 10, 10)
+}
+
+#emailstatus{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(5px + 1vmin);
+  color:rgb(0, 0, 0);
+  margin-top: 10px;
+}
+
+.text-password{
+  font-size: 15px;
+  margin-right: 110px;
+}
+
+.text-email{
+  font-size: 15px;
+  margin-right: 140px;
+}
+
+.dashback{
+  background-color: #9f9f9f;
+  height: 1000px;
+}
+
+.welcometext{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoutButton{
+  position:fixed;
+  bottom:0px;
 }

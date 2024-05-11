@@ -54,18 +54,23 @@ export const SignIn = () => {
         <div > 
             <h3> Login </h3>
             <div>
+              <text class="text-email">Email</text>
+              <br></br>
             <input  
                 className="input"
-            placeholder="Email"
+            placeholder="john@smith.com"
             onChange={(event) => {
                 setLoginEmail(event.target.value);
             }}
             />
             <br></br>
+            <br></br>
             </div>
+            <text class="text-password">Password</text>
+              <br></br>
             <input className="input"
                         type="password"
-            placeholder="Password"
+            placeholder="*********"
             onChange={(event) => {
                 setLoginPassword(event.target.value);
             }}
@@ -73,8 +78,8 @@ export const SignIn = () => {
             <br></br>
             <button className="forgotButton" onClick={forgot}> Forgot Password ?</button>
             <br></br>
-            <div id="loginstatus">   </div>
             <br></br>
+            <div id="loginstatus">   </div>
             <br></br>
             <button className="homeButton" onClick={login}> Login</button>
         </div>
