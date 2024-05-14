@@ -1,25 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase";
+import React, { useState } from 'react';
 import '../App.css';
-import Sidebar from "../Sidebar";
-
+import { ButtonGroup, Button} from '@mui/material';
+import {Mood} from './Mood';
+import {Appointment} from './Appointment';
+import {Survey} from './Survey';
+import AppBar from '../AppBar';
 
 export const Dashboard = () => {
-
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-  }, []);
+  const [active, setActive] = useState("");
 
   return (
     <div className="App" id="outer-container">
-      <Sidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'} />
+      <AppBar/>
       <div id="page-wrap">
-        <h1 className="welcome">Welcome, {user ? user.email : "[No User Logged In]"}</h1>
+      </div>
+      <br></br>
+      <div>
+      <ButtonGroup style={{ margin: "auto" }}  
+                    variant="contained" 
+                    aria-label="outlined primary button group"> 
+                    <Button onClick={() => setActive("Appointments")}>Appointments</Button>
+                    <Button onClick={() => setActive("Surveys")}>Surveys</Button> 
+                    <Button onClick={() => setActive("Mood")}>Mood</Button> 
+                </ButtonGroup> 
+      </div>
+      <br></br>
+      <div>
+        {active === "" && <div className='notFound'></div>}
+        {active === "Mood" && <Mood/>}
+        {active === "Surveys" && <Survey/>}
+        {active === "Appointments" && <Appointment/>}
       </div>
     </div>
   );

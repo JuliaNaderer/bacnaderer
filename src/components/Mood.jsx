@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-const Mood = () => {
+export const Mood = () => {
   const [selectedMood, setSelectedMood] = useState(null);
   const [moodHistory, setMoodHistory] = useState([]);
 
@@ -27,12 +27,13 @@ const Mood = () => {
 
   return (
     <div>
-      <h2>Select your mood:</h2>
-      <div>
+    <div className='mood'>
+      <h3 className='moodHeadline'>Select your current mood:</h3>
+      <div className='moodemojis'>
         {emojis.map((emoji, index) => (
           <span
           key={index}
-          style={{ fontSize: '2em', marginRight: '10px', cursor: 'pointer' }}
+          style={{ fontSize: '1em', marginRight: '10px', cursor: 'pointer' }}
           onClick={() => handleMoodSelection(index)}
           role="button"
           tabIndex={0}
@@ -44,11 +45,9 @@ const Mood = () => {
       </div>
       <div style={{ marginTop: '20px' }}>
         <h2>Mood History:</h2>
-        <Line data={moodData} />
+        {/*<Line data={moodData} />*/}
       </div>
+    </div>
     </div>
   );
 };
-
-export default Mood;
-

@@ -21,10 +21,11 @@ export const Mobile = () => {
         <h3> Enter your Phone Number</h3>
         <PhoneInput country={"ch"} value={phonenr} onChange={setPhoneNr} className="phoneInput"></PhoneInput>
         <br></br>
+        <p id="recaptcha-container-id"></p>
+        <br></br>
         <button className='homeButton' onClick={sendCode}>Send SMS</button>
         <br></br>
         <a className='homeButton' id='link' href="../login"> Go To Login</a>
-        <br></br>
         <br></br>
         <p id="status"></p>
         </div>

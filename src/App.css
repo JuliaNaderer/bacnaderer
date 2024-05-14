@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #4c4f4d;
 }
 
 .App-logo {
@@ -154,6 +155,27 @@
   border-radius: 10px;
 }
 
+.mood{
+  background-color: #4c4f4d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  height: 1000px;
+}
+
+.moodHeadline{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.moodemojis{
+  display: flex;
+  top: 50%;
+}
+
 .label{
   font-size: calc(2px + 2vmin);
 }
@@ -249,8 +271,6 @@
 }
 
 .logoutButton{
-  position:fixed;
-  bottom:50px;
   color:inherit;
   text-decoration: none;
 }

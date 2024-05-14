@@ -7,8 +7,9 @@ import {DashboardPage} from './pages/DashboardPage';
 import {ForgotInformationPage} from './pages/ForgotInformationPage';
 import {OTPPage} from "./pages/OTPPage";
 import {MobileOtpPage} from "./pages/MobileOtpPage";
-import MoodTrackPage from './pages/Moodtracker';
-
+import {MoodTrackPage} from './pages/MoodTrackPage';
+import {AppointmentPage} from './pages/AppointmentPage';
+import {SurveyPage} from "./pages/SurveyPage";
 
 export const Routes = () => {
     return(
@@ -38,9 +39,15 @@ export const Routes = () => {
                 <Route path="/moodtracker"> {/* Add route for MoodTrackPage */}
                     <MoodTrackPage />
                 </Route>
+                <Route path="/appointments">
+                    <AppointmentPage/>
+                </Route>
+                <Route path="/surveys">
+                    <SurveyPage/>
+                </Route>
                 <Route>
                     <NotFoundPage/>
-                </Route> 
+                </Route>
             </Switch>
         </BrowserRouter>
     );

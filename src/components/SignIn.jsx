@@ -1,9 +1,11 @@
 import React, { useState} from 'react';
-import {signInWithEmailAndPassword} from "firebase/auth";
-import {} from "firebase/auth";
 import {auth} from "../firebase.js";
 import { useHistory } from 'react-router-dom';
 import '../App.css';
+import {
+  sendEmailVerification,
+  signInWithEmailAndPassword
+} from "firebase/auth";
 
 export const SignIn = () => {
   const [loginEmail, setLoginEmail] = useState("");
@@ -11,10 +13,8 @@ export const SignIn = () => {
   const history = useHistory();
 
   const login = async () => {
-
       var loginStatus = document.getElementById("loginstatus");
       loginStatus.innerHTML = "";
-    try {
 
       if(loginEmail === "" && loginPassword === ""){
         loginStatus.innerHTML = "Empty User Credentials";
@@ -29,18 +29,24 @@ export const SignIn = () => {
       }
       else{
 
-      const user = await signInWithEmailAndPassword(
-        auth,
-        loginEmail,
-        loginPassword
-      );
-      console.log(user);
-      history.push("/mobileOtp");
-    }}catch (error) {
-      console.log(error.message);
-      loginStatus.innerHTML = "Invalid User Credentials"
+        const userCredential = signInWithEmailAndPassword(auth, loginEmail, loginPassword)
+        .then(function (userCredential) {
+          console.log(userCredential);
+          history.push("/dashboard")
+        })
+        .catch(function (error) {
+            if (error.code === 'auth/multi-factor-auth-required') {
+              history.push("/mobileOtp");
+            }else if(error.code === 'auth/invalid-email-verified'){
+              sendEmailVerification(userCredential.user)
+              loginStatus.innerHTML = "Verification Email Sent";
+            } 
+            else if (error.code === 'auth/wrong-password') {
+                // Handle other errors such as wrong password.
+            }
+        });
+      }
     }
-  };
 
   const forgot = async () => {
     history.push("/reset")
@@ -64,7 +70,6 @@ export const SignIn = () => {
             }}
             />
             <br></br>
-            <br></br>
             </div>
             <text class="text-password">Password</text>
               <br></br>
@@ -78,8 +83,7 @@ export const SignIn = () => {
             <br></br>
             <button className="forgotButton" onClick={forgot}> Forgot Password ?</button>
             <br></br>
-            <br></br>
-            <div id="loginstatus">   </div>
+            <div id="loginstatus"></div>
             <br></br>
             <button className="homeButton" onClick={login}> Login</button>
         </div>
