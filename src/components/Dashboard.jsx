@@ -7,7 +7,7 @@ import {Survey} from './Survey';
 import AppBar from '../AppBar';
 
 export const Dashboard = () => {
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState("Appointments");
 
   return (
     <div className="App" id="outer-container">
@@ -26,7 +26,6 @@ export const Dashboard = () => {
       </div>
       <br></br>
       <div>
-        {active === "" && <div className='notFound'></div>}
         {active === "Mood" && <Mood/>}
         {active === "Surveys" && <Survey/>}
         {active === "Appointments" && <Appointment/>}
