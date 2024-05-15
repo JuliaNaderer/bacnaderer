@@ -35,15 +35,19 @@ export const SignIn = () => {
           history.push("/dashboard")
         })
         .catch(function (error) {
+          console.log(error);
             if (error.code === 'auth/multi-factor-auth-required') {
               history.push("/mobileOtp");
             }else if(error.code === 'auth/invalid-email-verified'){
               sendEmailVerification(userCredential.user)
               loginStatus.innerHTML = "Verification Email Sent";
             } 
-            else if (error.code === 'auth/wrong-password') {
-                // Handle other errors such as wrong password.
+            else if (error.code === 'auth/user-not-found') {
+              loginStatus.innerHTML = "No Such User \"" + loginEmail + "\"";
             }
+            else if (error.code === 'auth/wrong-password') {
+              // Handle other errors such as wrong password.
+          }
         });
       }
     }
