@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../App.css';
 import { ButtonGroup, Button} from '@mui/material';
 import {Mood} from './Mood';
-import {Appointment} from './Appointment';
+import {Appointments} from './Appointments';
 import {Survey} from './Survey';
 import AppBar from '../AppBar';
 
@@ -28,7 +28,7 @@ export const Dashboard = () => {
       <div>
         {active === "Mood" && <Mood/>}
         {active === "Surveys" && <Survey/>}
-        {active === "Appointments" && <Appointment/>}
+        {active === "Appointments" && <Appointments/>}
       </div>
     </div>
   );

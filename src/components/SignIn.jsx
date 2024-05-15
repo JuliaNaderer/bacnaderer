@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import {auth} from "../firebase.js";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import {onAuthStateChanged, sendEmailVerification,
   signInWithEmailAndPassword,
@@ -10,7 +10,7 @@ import {onAuthStateChanged, sendEmailVerification,
 export const SignIn = () => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const login = async () => {
       var loginStatus = document.getElementById("loginstatus");
@@ -35,7 +35,7 @@ export const SignIn = () => {
             firebaseUser.reload();
             if(firebaseUser.emailVerified){
               console.log(userCredential);
-              history.push("/dashboard")
+              navigate("/dashboard")
             }else{
               sendEmailVerification(userCredential.user)
               loginStatus.innerHTML = "Please verify your Email before logging in";
@@ -46,7 +46,7 @@ export const SignIn = () => {
         .catch(function (error) {
           console.log(error);
             if (error.code === 'auth/multi-factor-auth-required') {
-              history.push("/mobileOtp");
+              navigate("/mobileOtp");
             }
             else if (error.code === 'auth/user-not-found') {
               loginStatus.innerHTML = "No Such User \"" + loginEmail + "\"";
@@ -58,8 +58,9 @@ export const SignIn = () => {
       }
     }
 
+
   const forgot = async () => {
-    history.push("/reset")
+    navigate("/reset")
   };
 
   return (

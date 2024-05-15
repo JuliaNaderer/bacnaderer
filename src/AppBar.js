@@ -24,7 +24,7 @@ import PollIcon from '@mui/icons-material/Poll';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { signOut, onAuthStateChanged} from "firebase/auth";
 import {auth} from "../src/firebase.js";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -89,7 +89,7 @@ export default function PersistentDrawerLeft() {
 
   const logout = async () => {
     await signOut(auth);
-    history.push("/login");
+    navigate("/login");
   };
 
   React.useEffect(() => {
@@ -98,7 +98,7 @@ export default function PersistentDrawerLeft() {
     });
   }, []);
 
-  const history = useHistory();
+  const navigate = useNavigate;
 
   const information = [{
     title:'Dashboard',

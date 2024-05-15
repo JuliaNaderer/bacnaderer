@@ -1,10 +1,10 @@
 import OtpInput from "otp-input-react";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
 
 
 export const OTP = () => {
-    const history = useHistory();
+    const history = useNavigate();
     const [otp, setOtp] = useState();
 
     const login = async () => {
