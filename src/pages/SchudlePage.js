@@ -16,9 +16,7 @@ export const SchedulePage = () => {
             if (user) {
                 // Benutzer ist angemeldet, hole seine Termine
                 const userAppointments = await getFirebaseAppointments(); // Call the function to get appointments from Firebase
-                console.log(userAppointments);
                 setAppointments(userAppointments);
-                console.log(appointments);
             } else {
                 // Benutzer ist abgemeldet, leere die Termine
                 setAppointments([]);

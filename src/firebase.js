@@ -28,11 +28,10 @@ const getFirebaseAppointments = async () => {
 
     const qb = query(collection(db, "patients"), where("uid", "==", currentUser.uid));
     const querySnapshot = await getDocs(qb);
-    console.log(querySnapshot);
     if(true){
 
       const appointments = querySnapshot.docs
-      .map((doc) => ({...doc.data().appointments, id:doc.id }));
+      .map((doc) => ({...doc.data().appointments}));
       return appointments;
     }
     else{
