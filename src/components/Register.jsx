@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {createUserWithEmailAndPassword} from "firebase/auth";
-import {} from "firebase/auth";
+import {sendEmailVerification} from "firebase/auth";
 import {auth} from "../firebase";
 import '../App.css';
 
@@ -22,12 +22,13 @@ export const Register = () => {
           registerEmail,
           registerPassword
         );
-        document.getElementById("registerStatus").innerHTML= "Successfully Created User, please go back to login";
+        sendEmailVerification(user.user)
+        document.getElementById("registerStatus").innerHTML = "Please verify your Email before logging in";
         console.log(user);
       } catch (error) {
         console.log(error.message);
         if(error.code === "auth/email-already-in-use"){
-          document.getElementById("registerStatus").innerHTML= "User is already regsitered";
+          document.getElementById("registerStatus").innerHTML= "User already exists";
         }
       }
     };

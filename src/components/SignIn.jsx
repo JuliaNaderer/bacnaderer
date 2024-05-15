@@ -2,9 +2,9 @@ import React, { useState} from 'react';
 import {auth} from "../firebase.js";
 import { useHistory } from 'react-router-dom';
 import '../App.css';
-import {
-  sendEmailVerification,
-  signInWithEmailAndPassword
+import {onAuthStateChanged, sendEmailVerification,
+  signInWithEmailAndPassword,
+  signInWithRedirect
 } from "firebase/auth";
 
 export const SignIn = () => {
@@ -29,19 +29,25 @@ export const SignIn = () => {
       }
       else{
 
-        const userCredential = signInWithEmailAndPassword(auth, loginEmail, loginPassword)
+        const userCredentials = signInWithEmailAndPassword(auth, loginEmail, loginPassword)
         .then(function (userCredential) {
-          console.log(userCredential);
-          history.push("/dashboard")
-        })
+          onAuthStateChanged(auth, (firebaseUser) => {
+            firebaseUser.reload();
+            if(firebaseUser.emailVerified){
+              console.log(userCredential);
+              history.push("/dashboard")
+            }else{
+              sendEmailVerification(userCredential.user)
+              loginStatus.innerHTML = "Please verify your Email before logging in";
+            }
+          });
+          }
+        )
         .catch(function (error) {
           console.log(error);
             if (error.code === 'auth/multi-factor-auth-required') {
               history.push("/mobileOtp");
-            }else if(error.code === 'auth/invalid-email-verified'){
-              sendEmailVerification(userCredential.user)
-              loginStatus.innerHTML = "Verification Email Sent";
-            } 
+            }
             else if (error.code === 'auth/user-not-found') {
               loginStatus.innerHTML = "No Such User \"" + loginEmail + "\"";
             }
