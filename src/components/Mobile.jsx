@@ -1,15 +1,15 @@
 import React, { useState} from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import '../App.css';
 
 export const Mobile = () => {
   const [phonenr, setPhoneNr] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const sendCode = async () => {
-    history.push("/otp")
+    navigate("/otp")
   };
 
   return (

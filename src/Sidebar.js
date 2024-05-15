@@ -1,22 +1,22 @@
 import React from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import './Sidebar.css';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { signOut} from "firebase/auth";
 import {auth} from "./firebase.js";
 
-  export const Sidebar = () => {
+export const Sidebar = () => {
 
-    const history = useHistory();
+  const navigate = useNavigate();
 
-    const logout = async () => {
-      await signOut(auth);
-      history.push("/login");
-    };
+  const logout = async () => {
+    await signOut(auth);
+    navigate("/login");
+  };
 
-    return (
-        <Menu>
-        <a className="menu-item" href="/">
+  return (
+    <Menu>
+      <a className="menu-item" href="/">
           Notifications
         </a>
         <a className="menu-item" href="/salads">

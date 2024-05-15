@@ -2,48 +2,48 @@ import React, { useState} from 'react';
 import {signInWithEmailAndPassword} from "firebase/auth";
 import {} from "firebase/auth";
 import {auth} from "../firebase.js";
-import { useHistory } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import '../App.css';
 
-export const SignIn = () => {
+
+const SignIn = () => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
-  const login = async () => {
-
-      var loginStatus = document.getElementById("loginstatus");
-      loginStatus.innerHTML = "";
-    try {
-
-      if(loginEmail === "" && loginPassword === ""){
-        loginStatus.innerHTML = "Empty User Credentials";
-      }
-      else if (loginPassword === "")
-      {
-        loginStatus.innerHTML = "Empty Password Field";
-      }
-      else if (loginEmail === "")
-      {
-        loginStatus.innerHTML = "Empty Password Field";
-      }
-      else{
-
+const login = async () => {
+  var loginStatus = document.getElementById("loginstatus");
+  loginStatus.innerHTML = "";
+  try {
+    if(loginEmail === "" && loginPassword === ""){
+      loginStatus.innerHTML = "Empty User Credentials";
+    }
+    else if (loginPassword === "")
+    {
+      loginStatus.innerHTML = "Empty Password Field";
+    }
+    else if (loginEmail === "")
+    {
+      loginStatus.innerHTML = "Empty Password Field";
+    }
+    else{
       const user = await signInWithEmailAndPassword(
         auth,
         loginEmail,
         loginPassword
       );
       console.log(user);
-      history.push("/mobileOtp");
-    }}catch (error) {
-      console.log(error.message);
-      loginStatus.innerHTML = "Invalid User Credentials"
+      navigate("/mobileOtp");
     }
-  };
+  } catch (error) {
+    console.log("Error signing in:", error.message);
+    console.log("Error message:", error.message)
+    loginStatus.innerHTML = "Invalid User Credentials"
+  }
+};
 
   const forgot = async () => {
-    history.push("/reset")
+    navigate("/reset")
   };
 
   return (
@@ -88,3 +88,5 @@ export const SignIn = () => {
     </div>
   );
 }
+
+export default SignIn;

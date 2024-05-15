@@ -1,9 +1,11 @@
 import './App.css';
-import {Routes} from "./Routes";
+import { RoutesComponent } from './Routes.js';
 
-export const App = () => {
-  return(
-    <Routes/>
+function App() {
+  return (
+    <div className="App">
+      <RoutesComponent />
+    </div>
   );
 }
 

@@ -1,4 +1,4 @@
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {LoginPage} from "./pages/LoginPage";
 import {RegisterPage} from './pages/RegisterPage';
 import {NotFoundPage} from './pages/NotFoundPage';
@@ -7,41 +7,24 @@ import {DashboardPage} from './pages/DashboardPage';
 import {ForgotInformationPage} from './pages/ForgotInformationPage';
 import {OTPPage} from "./pages/OTPPage";
 import {MobileOtpPage} from "./pages/MobileOtpPage";
-import MoodTrackPage from './pages/Moodtracker';
+//import {MoodTrackPage} from './pages/Moodtracker';
+import SchedulePage from './pages/SchedulePage';
 
 
-export const Routes = () => {
+export const RoutesComponent = () => {
     return(
         <BrowserRouter>
-            <Switch>
-                <Route path="/" exact>
-                    <Homepage/>
-                </Route>
-                <Route path="/login">
-                    <LoginPage/>
-                </Route>
-                <Route path="/register">
-                    <RegisterPage/>
-                </Route>
-                <Route path="/dashboard">
-                    <DashboardPage/>
-                </Route>
-                <Route path="/reset">
-                    <ForgotInformationPage/>
-                </Route>
-                <Route path="/otp">
-                    <OTPPage/>
-                </Route>
-                <Route path="/mobileOtp">
-                    <MobileOtpPage/>
-                </Route>
-                <Route path="/moodtracker"> {/* Add route for MoodTrackPage */}
-                    <MoodTrackPage />
-                </Route>
-                <Route>
-                    <NotFoundPage/>
-                </Route> 
-            </Switch>
+            <Routes>
+                <Route path="/" element={<Homepage/>} />
+                <Route path="/login" element={<LoginPage/>} />
+                <Route path="/register" element={<RegisterPage/>} />
+                <Route path="/dashboard" element={<DashboardPage/>} />
+                <Route path="/reset" element={<ForgotInformationPage/>} />
+                <Route path="/otp" element={<OTPPage/>} />
+                <Route path="/mobileOtp" element={<MobileOtpPage/>} />
+                <Route path="/appointments" element={<SchedulePage/>} />
+                <Route path="*" element={<NotFoundPage/>} />
+            </Routes>
         </BrowserRouter>
     );
-}
+};
