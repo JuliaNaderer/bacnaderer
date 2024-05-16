@@ -53,20 +53,16 @@ export const Appointments = () => {
             <Typography variant="h1">Appointments</Typography>
             <Container>
                 <DatePicker selected={new Date()} onChange={handleDateChange} />
-                <br></br>
-                <br></br>
-                    <div>
+                        <br></br>
+                        <br></br>
                         {appointmentsVar.map((appointment, index) => (
-                            <div className='border' key={index}>
-                                <h2>{appointment[index].name}</h2>
-                                <p>{appointment[index].date}</p>
-                                <p>{appointment[index].time}</p>
-                                <p>{appointment[index].psychiatrist}</p>
+                             <div className='border' key={index}>
+                                <h2>{appointment.name}</h2>
+                                <p>{appointment.date}</p>
+                                <p>{appointment.time}</p>
+                                <p>{appointment.psychiatrist}</p>
                             </div>
-                        ))}
-                        <br></br>
-                        <br></br>
-                    </div>
+))}
             </Container>
         </div>
     );
