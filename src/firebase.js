@@ -25,19 +25,18 @@ const db = getFirestore(app);
 const getFirebaseAppointments = async () => {
   const currentUser = auth.currentUser;
   if (currentUser) {
-
     const qb = query(collection(db, "patients"), where("uid", "==", currentUser.uid));
     const querySnapshot = await getDocs(qb);
-    if(true){
-
+    if(querySnapshot.docs.length > 0){
       const appointments = querySnapshot.docs
-      .map((doc) => ({...doc.data().appointments}));
+      .flatMap((doc) => Object.values(doc.data().appointments).map((appointment) => ({...appointment})));
       return appointments;
     }
     else{
-        console.log('No such patient!');
-        return null;
-      }
+      console.log('No such patient!');
+      return null;
+    }
+      
    }else {
     console.log('No user is signed in.');
     return null;
