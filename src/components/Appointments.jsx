@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, getFirebaseAppointments } from "../firebase";
+import Scheduler from './Scheduler';
 
 
 export const Appointments = () => {
@@ -50,9 +51,26 @@ export const Appointments = () => {
 
     return (
         <div>
-            <Typography variant="h1">Appointments</Typography>
+            <br></br>
+            <br></br>
+            <Typography variant="h1">Your Appointments</Typography>
+            <br></br>
+            <br></br>
+            <div className='schedulerComponent'>
+                <Scheduler appointment={appointmentsVar}/>
+            </div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            {/*
             <Container>
-                <DatePicker selected={new Date()} onChange={handleDateChange} />
                         <br></br>
                         <br></br>
                         {appointmentsVar.map((appointment, index) => (
@@ -61,9 +79,8 @@ export const Appointments = () => {
                                 <p>{appointment.date}</p>
                                 <p>{appointment.time}</p>
                                 <p>{appointment.psychiatrist}</p>
-                            </div>
-))}
-            </Container>
+                            </div>))}
+                        </Container>*/}
         </div>
     );
 };

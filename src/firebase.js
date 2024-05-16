@@ -25,11 +25,14 @@ const db = getFirestore(app);
 const getFirebaseAppointments = async () => {
   const currentUser = auth.currentUser;
   if (currentUser) {
-    const qb = query(collection(db, "patients"), where("uid", "==", currentUser.uid));
+    console.log(currentUser.uid);
+    const qb = query(collection(db, "patients2"), where("uid", "==", currentUser.uid));
     const querySnapshot = await getDocs(qb);
     if(querySnapshot.docs.length > 0){
+
       const appointments = querySnapshot.docs
       .flatMap((doc) => Object.values(doc.data().appointments).map((appointment) => ({...appointment})));
+      console.log(appointments);
       return appointments;
     }
     else{
