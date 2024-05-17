@@ -41,5 +41,6 @@ const getFirebaseAppointments = async () => {
     return null;
    }
 } 
+
 export default app;
 export {auth, getFirebaseAppointments};

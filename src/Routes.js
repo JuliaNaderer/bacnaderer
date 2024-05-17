@@ -5,7 +5,6 @@ import {NotFoundPage} from './pages/NotFoundPage';
 import {Homepage} from './pages/Homepage';
 import {ForgotInformationPage} from './pages/ForgotInformationPage';
 import {OTPPage} from "./pages/OTPPage";
-import {MobileOtpPage} from "./pages/MobileOtpPage";
 import {MoodTrackPage} from './pages/MoodTrackPage';
 import {SchedulePage} from './pages/SchudlePage';
 import {SurveyPage} from './pages/SurveyPage';
@@ -22,7 +21,6 @@ export const RoutesComponent = () => {
                 <Route path="/surveys" element={<SurveyPage/>} />
                 <Route path="/reset" element={<ForgotInformationPage/>} />
                 <Route path="/otp" element={<OTPPage/>} />
-                <Route path="/mobileOtp" element={<MobileOtpPage/>} />
                 <Route path="/appointments" element={<SchedulePage/>} />
                 <Route path="/moodtracker" element={<MoodTrackPage/>} />
                 <Route path="*" element={<NotFoundPage/>} />

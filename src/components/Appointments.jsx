@@ -17,12 +17,15 @@ export const Appointments = () => {
                 // Benutzer ist angemeldet, hole seine Termine
                 const userAppointments = await getFirebaseAppointments(); // Call the function to get appointments from Firebase
                 console.log(userAppointments);
+                if(userAppointments != null){
                 userAppointments.forEach(element => {
                         element.startDate = new Date(element.startDate.seconds*1000);
                         element.endDate = new Date(element.endDate.seconds*1000);
                 });
+
                 setAppointments(userAppointments);
                 setLoading(false);
+            }
             } else {
                 // Benutzer ist abgemeldet, leere die Termine
                 setAppointments([]);
