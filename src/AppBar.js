@@ -16,13 +16,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import PollIcon from '@mui/icons-material/Poll';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { signOut, onAuthStateChanged} from "firebase/auth";
+import {signOut, onAuthStateChanged} from "firebase/auth";
 import {auth} from "../src/firebase.js";
 import { useNavigate } from 'react-router-dom';
 
@@ -76,8 +75,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [title, setTitle] = React.useState("");
   const [user, setUser] = React.useState({});
+
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    await signOut(auth);
+    navigate("/login");
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -87,18 +92,11 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
-  const logout = async () => {
-    await signOut(auth);
-    navigate("/login");
-  };
-
   React.useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
   }, []);
-
-  const navigate = useNavigate;
 
   const information = [{
     title:'Dashboard',

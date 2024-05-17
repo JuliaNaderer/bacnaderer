@@ -1,10 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { query, where } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
-
 
 const firebaseConfig = {
 apiKey: "AIzaSyAKKLtmuK7zDE5y-jT4Senhq90G5b1C_OE",
@@ -19,7 +16,6 @@ measurementId: "G-142VR4C9Q1"
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
 const getFirebaseAppointments = async () => {

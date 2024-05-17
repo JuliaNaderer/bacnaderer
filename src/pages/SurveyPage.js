@@ -6,9 +6,7 @@ export const SurveyPage = () => {
   return (
     <div className="App" id="outer-container">
     <AppBar/>
-    <div className='notFound'>
     <Survey/>    
-    </div>
   </div>
   );
 }

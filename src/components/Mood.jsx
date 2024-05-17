@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Line } from 'react-chartjs-2';
 
 export const Mood = () => {
   const [selectedMood, setSelectedMood] = useState(null);

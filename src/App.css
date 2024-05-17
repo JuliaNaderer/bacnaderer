@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: #4c4f4d;
+  background-color: #9f9f9f;
 }
 
 .App-logo {
@@ -156,7 +156,7 @@
 }
 
 .mood{
-  background-color: #4c4f4d;
+  background-color: #9f9f9f;
   display: flex;
   flex-direction: column;
   align-items: center;

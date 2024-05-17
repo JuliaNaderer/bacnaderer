@@ -18,12 +18,13 @@ import {
   ConfirmationDialog,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
+
 export default class Demo extends React.PureComponent {
     constructor(props) {
       super(props);
-  
+
       this.state = {
-        data: props.appointment,
+        data: props.appointments,
         currentViewName: 'work-week',
         currentDate: '2024-05-16',
         addedAppointment: {},
@@ -88,7 +89,7 @@ export default class Demo extends React.PureComponent {
             onEditingAppointmentChange={this.changeEditingAppointment}
           />
             <ViewState
-              defaultCurrentDate="2024-01-01"
+              defaultCurrentDate={Date.now()}
               currentViewName={currentViewName}
               onCurrentViewNameChange={this.currentViewNameChange}
             />

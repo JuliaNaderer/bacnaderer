@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import {onAuthStateChanged, sendEmailVerification,
   signInWithEmailAndPassword,
-  signInWithRedirect
 } from "firebase/auth";
+
 
 export const SignIn = () => {
   const [loginEmail, setLoginEmail] = useState("");
@@ -28,8 +28,7 @@ export const SignIn = () => {
         loginStatus.innerHTML = "Empty Password Field";
       }
       else{
-
-        const userCredentials = signInWithEmailAndPassword(auth, loginEmail, loginPassword)
+        signInWithEmailAndPassword(auth, loginEmail, loginPassword)
         .then(function (userCredential) {
           onAuthStateChanged(auth, (firebaseUser) => {
             firebaseUser.reload();
@@ -52,7 +51,7 @@ export const SignIn = () => {
               loginStatus.innerHTML = "No Such User \"" + loginEmail + "\"";
             }
             else if (error.code === 'auth/wrong-password') {
-              // Handle other errors such as wrong password.
+              loginStatus.innerHTML = "Invalid Credentials";
           }
         });
       }
@@ -71,7 +70,7 @@ export const SignIn = () => {
         <div > 
             <h3> Login </h3>
             <div>
-              <text class="text-email">Email</text>
+              <span className="text-email">Email</span>
               <br></br>
             <input  
                 className="input"
@@ -82,7 +81,7 @@ export const SignIn = () => {
             />
             <br></br>
             </div>
-            <text class="text-password">Password</text>
+            <span className="text-password">Password</span>
               <br></br>
             <input className="input"
                         type="password"
