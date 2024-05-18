@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, getDoc, doc } from "firebase/firestore";
 import { query, where } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -21,14 +21,12 @@ const db = getFirestore(app);
 const getFirebaseAppointments = async () => {
   const currentUser = auth.currentUser;
   if (currentUser) {
-    console.log(currentUser.uid);
     const qb = query(collection(db, "patients2"), where("uid", "==", currentUser.uid));
     const querySnapshot = await getDocs(qb);
     if (querySnapshot.docs.length > 0) {
 
       const appointments = querySnapshot.docs
         .flatMap((doc) => Object.values(doc.data().appointments).map((appointment) => ({ ...appointment })));
-      console.log(appointments);
       return appointments;
     }
     else {
@@ -64,5 +62,27 @@ const getUserSurveys = async () => {
   }
 }
 
+const getUserName = async () => {
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    console.log(currentUser.uid);
+    const qb = query(collection(db, "patients2"), where("uid", "==", currentUser.uid));
+    const querySnapshot = await getDocs(qb);
+    if (querySnapshot.docs.length > 0) {
+
+      const name = querySnapshot.docs.map((doc) => doc.data().name);
+      return name;
+    }
+    else {
+      console.log('No such patient!');
+      return null;
+    }
+
+  } else {
+    console.log('No user is signed in.');
+    return null;
+  }
+}
+
 export default app;
-export { auth, getFirebaseAppointments, getUserSurveys };
+export { auth, getFirebaseAppointments, getUserSurveys, getUserName };

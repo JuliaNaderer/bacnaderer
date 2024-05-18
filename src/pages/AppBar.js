@@ -22,8 +22,9 @@ import AddReactionIcon from '@mui/icons-material/AddReaction';
 import PollIcon from '@mui/icons-material/Poll';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {signOut, onAuthStateChanged} from "firebase/auth";
-import {auth} from "../src/firebase.js";
+import {auth} from "../firebase.js";
 import { useNavigate } from 'react-router-dom';
+import { getUserName } from '../firebase';
 
 const drawerWidth = 240;
 
@@ -76,6 +77,8 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [user, setUser] = React.useState({});
+  const [userName, setUserName] = React.useState("");
+
 
   const navigate = useNavigate();
 
@@ -93,10 +96,21 @@ export default function PersistentDrawerLeft() {
   };
 
   React.useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-  }, []);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+          // Benutzer ist angemeldet, hole seine Termine
+          const name = await getUserName(); // Call the function to get appointments from Firebase
+
+          setUserName(name);
+      }
+      else {
+          // Benutzer ist abgemeldet, leere die Termine
+          setUserName("");
+      }
+  });
+  // Aufräumen bei Unmount
+  return () => unsubscribe();
+}, []);
 
   const information = [{
     title:'Dashboard',
@@ -130,7 +144,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            <h3>Welcome, {user ? user.email : "[No User Logged In]"} !</h3>
+            <h4>Welcome, {user ? userName : "[No User Logged In]"} !</h4>
           </Typography>
         </Toolbar>
       </AppBar>

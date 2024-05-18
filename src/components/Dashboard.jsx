@@ -4,7 +4,7 @@ import { ButtonGroup, Button} from '@mui/material';
 import {Mood} from './Mood';
 import {Appointments} from './Appointments';
 import {Survey} from './Survey';
-import AppBar from '../AppBar';
+import AppBar from '../pages/AppBar';
 
 export const Dashboard = () => {
   const [active, setActive] = useState("Appointments");

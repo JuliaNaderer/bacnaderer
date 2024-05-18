@@ -7,12 +7,15 @@ import { auth, getUserSurveys } from '../firebase';
 import '../App.css';
 
 export const Survey = () => {
-  const [expanded, setExpanded] = useState(false);
-  const [isLoading, setLoading] = useState([]);
+  const [expanded, setExpanded] = useState({});
+  const [isLoading, setLoading] = useState(false);
   const [surveys, setSurveys] = useState([]);
 
-  const toggleExpand = () => {
-    setExpanded(!expanded);
+  const toggleExpand = (index) => {
+    setExpanded((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
   };
 
   useEffect(() => {
@@ -33,43 +36,59 @@ export const Survey = () => {
     return () => unsubscribe();
   }, []);
 
-
-
   return (
     <div>
-      {isLoading ? <p>Appointments are Loading...</p> :
+      {isLoading ? (
+        <p>Appointments are Loading...</p>
+      ) : (
         <div>
           {surveys.map((surveyInstance, index) => (
-            <div key={index} className={`survey ${expanded ? 'expanded' : ''}`}>
-              <div className="survey-title" onClick={toggleExpand}>
-                <h3>{surveyInstance.title} | Status: {surveyInstance.status}</h3>
-                <FontAwesomeIcon icon={expanded ? faChevronUp : faChevronDown} className="expand-icon" />
+            <div>
+              <div
+                key={index}
+                className={`survey ${index} ${expanded[index] ? 'expanded' : ''}`}
+              >
+                <div className="survey-title" onClick={() => toggleExpand(index)}>
+                  <h3>{surveyInstance.title} | Status: {surveyInstance.status}</h3>
+                  <FontAwesomeIcon
+                    icon={expanded[index] ? faChevronUp : faChevronDown}
+                    className="expand-icon"
+                  />
+                </div>
+                <br />
+                <div className="survey-content">
+                  {expanded[index] &&
+                    surveyInstance.questions.map((question, qIndex) => (
+                      <div>
+                        <div key={qIndex} className="survey-question">
+                          <h4 htmlFor={`question-${index}-${qIndex}`}>{question}</h4>
+                          <Textarea
+                            key={qIndex}
+                            className="surveyTextarea"
+                            placeholder="Your Answer goes here..."
+                          />
+                          <br />
+                          <p className='answer'>
+                            Previous Answer: {surveyInstance.answers[qIndex]}
+                          </p>
+                          <button className="homeButton">Submit Question</button>
+                          <br />
+                          <br />
+                        </div>
+                        <br />
+                        <br />
+                      </div>
+                    ))}
+                  <br />
+                  <button className="homeButton">Submit Whole Survey</button>
+                </div>
               </div>
               <br />
-              <div className="survey-content">
-                {expanded && surveyInstance.questions.map((question, index) => (
-                  <div>
-                    <div key={index} className="survey-question">
-                      <h4 htmlFor={`question-${index}`}>{question}</h4>
-                      <textarea
-                        className="surveyTextarea"
-                        placeholder="Your Answer goes here..."
-                      />
-                      <br/>
-                      <br></br>
-                      <button className="homeButton">Sumbit Question</button>
-                      <br></br>
-                      <br></br>
-                    </div>
-                    <br></br>
-                  </div>
-                ))}
-                <br />
-                <button className="homeButton">Sumbit Whole Survey</button>
-              </div>
+              <br />
             </div>
           ))}
-        </div>}
+        </div>
+      )}
       <br />
       <br />
     </div>

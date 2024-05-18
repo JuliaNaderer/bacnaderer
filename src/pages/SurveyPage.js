@@ -1,5 +1,5 @@
 import { Survey } from '../components/Survey.jsx';
-import AppBar from "../AppBar.js";
+import AppBar from "./AppBar.js";
 import '../App.css';
 
 export const SurveyPage = () => {
