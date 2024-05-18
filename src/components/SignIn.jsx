@@ -82,6 +82,7 @@ export const SignIn = () => {
                 }}
               />
               <br></br>
+              <br></br>
             </div>
             <span className="text-password">Password</span>
             <br></br>
@@ -92,6 +93,7 @@ export const SignIn = () => {
                 setLoginPassword(event.target.value);
               }}
             />
+            <br></br>
             <br></br>
             <button className="forgotButton" onClick={forgot}> Forgot Password ?</button>
             <br></br>
