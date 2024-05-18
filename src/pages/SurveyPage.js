@@ -5,8 +5,8 @@ import '../App.css';
 export const SurveyPage = () => {
   return (
     <div className="App" id="outer-container">
-    <AppBar/>
-    <Survey/>    
-  </div>
+      <AppBar/>
+      <Survey/>
+    </div>
   );
 }

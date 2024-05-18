@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
-import { ViewState, EditingState} from '@devexpress/dx-react-scheduler';
+import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
   WeekView,
@@ -20,19 +20,19 @@ import {
 
 
 export default class Demo extends React.PureComponent {
-    constructor(props) {
-      super(props);
+  constructor(props) {
+    super(props);
 
-      this.state = {
-        data: props.appointments,
-        currentViewName: 'work-week',
-        currentDate: '2024-05-16',
-        addedAppointment: {},
-        appointmentChanges: {},
-        editingAppointment: undefined,
-      };
-      this.currentViewNameChange = (currentViewName) => {this.setState({ currentViewName });};
-      this.currentDateChange = (currentDate) => { this.setState({ currentDate }); };
+    this.state = {
+      data: props.appointments,
+      currentViewName: 'work-week',
+      currentDate: '2024-05-16',
+      addedAppointment: {},
+      appointmentChanges: {},
+      editingAppointment: undefined,
+    };
+    this.currentViewNameChange = (currentViewName) => { this.setState({ currentViewName }); };
+    this.currentDateChange = (currentDate) => { this.setState({ currentDate }); };
 
     this.commitChanges = this.commitChanges.bind(this);
     this.changeAddedAppointment = this.changeAddedAppointment.bind(this);
@@ -70,16 +70,16 @@ export default class Demo extends React.PureComponent {
     });
   }
 
-    render() {
-      const { data, addedAppointment, appointmentChanges, editingAppointment, currentViewName} = this.state;
-  
-      return (
-        <Paper>
-          <Scheduler
-            data={data}
-            height={800}
-          >
-            <EditingState
+  render() {
+    const { data, addedAppointment, appointmentChanges, editingAppointment, currentViewName } = this.state;
+
+    return (
+      <Paper>
+        <Scheduler
+          data={data}
+          height={800}
+        >
+          <EditingState
             onCommitChanges={this.commitChanges}
             addedAppointment={addedAppointment}
             onAddedAppointmentChange={this.changeAddedAppointment}
@@ -88,42 +88,41 @@ export default class Demo extends React.PureComponent {
             editingAppointment={editingAppointment}
             onEditingAppointmentChange={this.changeEditingAppointment}
           />
-            <ViewState
-              defaultCurrentDate={Date.now()}
-              currentViewName={currentViewName}
-              onCurrentViewNameChange={this.currentViewNameChange}
-            />
-  
-            <WeekView
-              startDayHour={10}
-              endDayHour={19}
-            />
-            <WeekView
-              name="work-week"
-              displayName="Work Week"
-              excludedDays={[0, 6]}
-              startDayHour={9}
-              endDayHour={19}
-            />
-            <MonthView />
-            <DayView />
-  
-            <Toolbar />
-            <ViewSwitcher />
-            <DateNavigator/>
-            <TodayButton/>
-            <AllDayPanel />
+          <ViewState
+            defaultCurrentDate={Date.now()}
+            currentViewName={currentViewName}
+            onCurrentViewNameChange={this.currentViewNameChange}
+          />
+
+          <WeekView
+            startDayHour={10}
+            endDayHour={19}
+          />
+          <WeekView
+            name="work-week"
+            displayName="Work Week"
+            excludedDays={[0, 6]}
+            startDayHour={9}
+            endDayHour={19}
+          />
+          <MonthView />
+          <DayView />
+
+          <Toolbar />
+          <ViewSwitcher />
+          <DateNavigator />
+          <TodayButton />
+          <AllDayPanel />
           <EditRecurrenceMenu />
           <ConfirmationDialog />
-            <Appointments />
-            <AppointmentTooltip
+          <Appointments />
+          <AppointmentTooltip
             showOpenButton
             showDeleteButton
           />
           <AppointmentForm />
-          </Scheduler>
-        </Paper>
-      );
-    }
+        </Scheduler>
+      </Paper>
+    );
   }
-  
+}
