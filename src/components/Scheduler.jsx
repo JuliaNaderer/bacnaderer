@@ -102,7 +102,7 @@ export default class Demo extends React.PureComponent {
             name="work-week"
             displayName="Work Week"
             excludedDays={[0, 6]}
-            startDayHour={9}
+            startDayHour={7}
             endDayHour={19}
           />
           <MonthView />
