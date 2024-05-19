@@ -1,7 +1,13 @@
+import React, { useState, useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { serverTimestamp } from 'firebase/firestore';
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, collection, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
 import { query, where } from "firebase/firestore";
+import 'core-js/features/symbol';
+import { updateDoc, arrayUnion } from "firebase/firestore";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAKKLtmuK7zDE5y-jT4Senhq90G5b1C_OE",
@@ -83,9 +89,11 @@ const getUserName = async () => {
     return null;
   }
 }
+
 const getMoodEntries = async (uid) => {
   const qb = query(collection(db, "moods"), where("uid", "==", uid));
   const querySnapshot = await getDocs(qb);
+  console.log(uid)
   if (!querySnapshot.empty) {
     const moodEntries = querySnapshot.docs.flatMap((doc) => doc.data().moodEntries);
     return moodEntries;
@@ -95,25 +103,70 @@ const getMoodEntries = async (uid) => {
   }
 }
 
-const saveMoodEntries = async (moodEntries) => {
-  console.log('MoodEntry recorded!')
-  const currentUser = auth.currentUser;
-  if (currentUser) {
-    const patientDoc = doc(db, "patients", currentUser.uid);
-    const patientDataDoc = await getDoc(patientDoc);
-    if (patientDataDoc.exists()) {
-      const patientData = patientDataDoc.data();
-      patientData.moodEntries = [...(patientData.moodEntries || []), ...moodEntries];
-      await setDoc(patientDoc, patientData);
-      return patientData.moodEntries || [];
-    } else {
-      console.log('Kein solcher Patient!');
+export const Mood = () => {
+  const [moods, setMoods] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setIsLoading(true);
+        setUser(user); // Speichern Sie den Benutzer im Zustand
+        const moodEntries = await getMoodEntries(user.uid); // Hier verwenden wir user.uid anstatt der uid Prop
+        if (moodEntries) {
+          setMoods(moodEntries);
+        }
+        setIsLoading(false);
+      } else {
+        console.error('Kein Benutzer ist angemeldet.');
+      }
+    });
+  
+    // Cleanup function
+    return () => unsubscribe();
+  }, []);
+
+  const handleMoodSelection = async (index) => {
+    if (!user) {
+      console.error('Kein Benutzer ist angemeldet.');
+      return;
+    };
+  
+    const moodEntryWithoutDate = {
+      mid: moods.length, // Sie können die Länge des aktuellen moods-Arrays als mid verwenden
+      mood: index + 1, // Add 1 to the index to get a number from 1 to 16
+    };
+
+    // Get a reference to the 'moods' collection
+    const moodsCollection = doc(db, 'moods', user.uid); // Verwenden Sie user.uid anstelle von uid
+    
+    // Add the mood entry to Firestore
+    try {
+      // Füge das Datum zum Dokument hinzu
+      await updateDoc(moodsCollection, {
+        date: serverTimestamp(),
+      });
+
+      // Füge das moodEntry zum Array hinzu
+      await updateDoc(moodsCollection, {
+        moodEntries: arrayUnion(moodEntryWithoutDate), // Change 'entries' to 'moodEntries' to match your database structure
+      });
+
+      // Füge das Datum zum lokalen moodEntry hinzu
+      const moodEntry = {
+        ...moodEntryWithoutDate,
+        date: new Date(), // Verwende das aktuelle Datum
+      };
+
+      setMoods(prevMoods => [...prevMoods, moodEntry]);
+      console.log('Mood saved!');
+    } catch (error) {
+      console.error('Error saving mood:', error);
     }
-  } else {
-    console.log('Kein Benutzer ist angemeldet.'); 
-  }
-};
+  };
+}; // Diese schließende Klammer und das Semikolon fehlten
 
 export default app;
-export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, saveMoodEntries};
+export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries };
 export { db };

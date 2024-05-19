@@ -1,55 +1,50 @@
-import { ResponsiveLine } from '@nivo/line'
+import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import CalendarHeatmap from 'react-calendar-heatmap';
+import 'react-calendar-heatmap/dist/styles.css';
+import './MoodChart.css';
 
 const MoodChart = ({ moods }) => {
-  console.log('Moods:', moods); // Hier wird der Inhalt von moods in der Konsole ausgegeben
+  const currentDate = new Date();
+  const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
-  // Konvertieren Sie die moods-Daten in das benötigte Format
-  const data = [
-    {
-      id: 'mood',
-      color: 'hsl(169, 70%, 50%)',
-      data: moods.map((mood, index) => ({
-        x: index,
-        y: mood.mood,
-      })),
-    },
-  ];
+  const [startDate, setStartDate] = useState(firstDayOfMonth);
+  const [endDate, setEndDate] = useState(currentDate);
+
+  const data = moods.map(mood => {
+    const date = mood.date.toDate();
+    const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
+    return {
+      date: formattedDate,
+      count: mood.mood + 1,
+      color: mood.color,
+    };
+  });
+
+  const filteredData = data.filter(d => new Date(d.date) >= startDate && new Date(d.date) <= endDate);
 
   return (
-    <div style={{ height: '400px' }}>
-      <ResponsiveLine
-        data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: 'point' }}
-        yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          orient: 'bottom',
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'index',
-          legendOffset: 36,
-          legendPosition: 'middle'
+    <div>
+      <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+      <DatePicker selected={endDate} onChange={date => setEndDate(date)} />
+      <CalendarHeatmap
+        startDate={startDate}
+        endDate={endDate}
+        gutterSize={1}
+        tooltipDataAttrs={value => {
+          // Add title attribute to cell
+          return {
+            title: value ? `Stimmung: ${value.count}` : '',
+          };
         }}
-        axisLeft={{
-          orient: 'left',
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'mood',
-          legendOffset: -40,
-          legendPosition: 'middle'
+        values={filteredData}
+        classForValue={(value) => {
+          if (!value) {
+            return 'color-empty';
+          }
+          return `color-scale-${value.count}`;
         }}
-        colors={{ scheme: 'nivo' }}
-        pointSize={10}
-        pointColor={{ theme: 'background' }}
-        pointBorderWidth={2}
-        pointBorderColor={{ from: 'serieColor' }}
-        pointLabel="y"
-        pointLabelYOffset={-12}
-        useMesh={true}
       />
     </div>
   );

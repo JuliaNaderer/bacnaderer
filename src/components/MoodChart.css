@@ -1,0 +1,31 @@
+  .react-calendar-heatmap .heatmap-rect {
+    width: 8px !important;
+    height: 8px !important;
+  }
+  
+  .react-calendar-heatmap .month-label {
+    font-size: 0.8em !important;
+    color: #ff5733 !important;
+  }
+  .react-calendar-heatmap text {
+    font-size: 5px !important;
+    fill: #fcfdfd;
+  }
+.your-container-class {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .your-item-class {
+    display: flex;
+    align-items: center;
+  }
+  
+  .your-item-class div:first-child {
+    background-color: rgb(255, 206, 67);
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
