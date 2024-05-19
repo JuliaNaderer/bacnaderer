@@ -6,20 +6,25 @@
     "@devexpress/dx-react-scheduler-material-ui": "^4.0.8",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@firebase/firestore": "^4.6.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.1",
     "@mui/icons-material": "^5.15.17",
     "@mui/joy": "^5.0.0-beta.40",
     "@mui/material": "^5.15.17",
+    "@mui/x-data-grid": "^7.5.0",
+    "@nivo/core": "^0.87.0",
+    "@nivo/line": "^0.87.0",
     "@syncfusion/ej2-react-schedule": "^25.2.4",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "chart.js": "^4.4.2",
+    "core-js": "^3.4.1",
     "devextreme": "^23.2.6",
     "devextreme-react": "^23.2.6",
     "dotenv": "^16.4.5",
-    "firebase": "^10.11.1",
+    "firebase": "^10.12.0",
     "firebase-admin": "^12.1.0",
     "moment": "^2.30.1",
     "otp-input-react": "^0.3.0",
@@ -71,6 +76,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.24.5",
     "source-map-loader": "^5.0.0"
   }
 }

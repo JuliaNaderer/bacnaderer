@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, getDocs, getDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
 import { query, where } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -83,6 +83,37 @@ const getUserName = async () => {
     return null;
   }
 }
+const getMoodEntries = async (uid) => {
+  const qb = query(collection(db, "moods"), where("uid", "==", uid));
+  const querySnapshot = await getDocs(qb);
+  if (!querySnapshot.empty) {
+    const moodEntries = querySnapshot.docs.flatMap((doc) => doc.data().moodEntries);
+    return moodEntries;
+  } else {
+    console.log('Keine Stimmungseinträge für diesen Benutzer gefunden!');
+    return null;
+  }
+}
+
+const saveMoodEntries = async (moodEntries) => {
+  console.log('MoodEntry recorded!')
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    const patientDoc = doc(db, "patients", currentUser.uid);
+    const patientDataDoc = await getDoc(patientDoc);
+    if (patientDataDoc.exists()) {
+      const patientData = patientDataDoc.data();
+      patientData.moodEntries = [...(patientData.moodEntries || []), ...moodEntries];
+      await setDoc(patientDoc, patientData);
+      return patientData.moodEntries || [];
+    } else {
+      console.log('Kein solcher Patient!');
+    }
+  } else {
+    console.log('Kein Benutzer ist angemeldet.'); 
+  }
+};
 
 export default app;
-export { auth, getFirebaseAppointments, getUserSurveys, getUserName };
+export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, saveMoodEntries};
+export { db };
