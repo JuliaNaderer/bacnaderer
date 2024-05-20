@@ -55,7 +55,11 @@ const MoodChart = ({ moods, emojis }) => {
 
   return (
     <div>
+      <label>Start Date</label>
+      <br></br>
       <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+      <br></br>
+      <label>End Date</label><br></br>
       <DatePicker selected={endDate} onChange={date => setEndDate(date)} />
       <CalendarHeatmap
         startDate={startDate}
