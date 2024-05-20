@@ -230,5 +230,5 @@ const submitFeedback = async (rating, uifb, usfb, adfb) => {
 };
 
 export default app;
-export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, addMoodEntry, updateMoodEntry, saveMoodEntries, submitAnswer, submitSurvey, updateStatus, submitFeedback};
+export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, addMoodEntry, updateMoodEntry, submitAnswer, submitSurvey, updateStatus, submitFeedback};
 export { db };
