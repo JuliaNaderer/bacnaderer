@@ -37,12 +37,12 @@ export const Survey = () => {
   const handleSubmitAnswer = async (surveyId, questionIndex) => {
     const answer = answers[surveyId]?.[questionIndex] || '';
     const answerStatusElements = document.getElementsByClassName(`answer-status ${surveyId} ${questionIndex}`);
-    
+
     if (answer.trim()) {
       try {
         await submitAnswer(surveyId, questionIndex, answer);
         console.log('Answer submitted successfully.');
-        
+
         // Update answer status for each element found
         Array.from(answerStatusElements).forEach(element => {
           element.innerText = 'Answer Received - Reload Page to see the new answer!';
@@ -55,7 +55,7 @@ export const Survey = () => {
       }
     }
   };
-  
+
   const handleSubmitSurvey = async (surveyId) => {
     const surveyAnswers = answers[surveyId] || {};
     const surveyStatusElements = document.getElementsByClassName(`survey-status ${surveyId}`);
@@ -66,7 +66,7 @@ export const Survey = () => {
       try {
         // Update the status of the survey to "Done"
         await updateStatus(surveyId);
-  
+
         // Submit the survey with answers
         await submitSurvey(surveyId, surveyAnswers);
         Array.from(surveyStatusElements).forEach(element => {
@@ -103,28 +103,28 @@ export const Survey = () => {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => { 
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && window.innerHeight > window.innerWidth){
+  useEffect(() => {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && window.innerHeight > window.innerWidth) {
       setNotRotated(true);
-    }else{
+    } else {
       setNotRotated(false);
     }
-    }, []);
+  }, []);
 
   return (
     <div>
       <div>
 
       </div>
-      { isNotRotated == true ? <div>
-      <ScreenRotationIcon/>
-      <h4>For a better experience please rotate your mobile device & reload the page! </h4></div> : null}
+      {isNotRotated == true ? <div>
+        <ScreenRotationIcon />
+        <h4>For a better experience please rotate your mobile device & reload the page! </h4></div> : null}
       {isLoading ? (
         <div>
           <Box>
             <CircularProgress />
-         </Box>
-        <p>Surveys are loading...</p>
+          </Box>
+          <p>Surveys are loading...</p>
         </div>
       ) : (
         <div>
@@ -143,47 +143,50 @@ export const Survey = () => {
                 </div>
                 <div className="survey-content">
                   <div>
-                  {expanded[index] &&
-                    surveyInstance.questions.map((question, qIndex) => (
-                      <div>
-                      <div key={qIndex} className="survey-question">
-                        <h4>{question}</h4>
-                        <Textarea
-                          className="surveyTextarea"
-                          placeholder="Your Answer goes here..."
-                          value={answers[surveyInstance.id]?.[qIndex] || ''}
-                          onChange={(e) =>
-                            handleAnswerChange(surveyInstance.id, qIndex, e.target.value)
-                          }
-                        />
-                        <br></br>
-                        <div className={"answer-status "+ surveyInstance.id + " " + qIndex}></div>
-                        <br></br>
-                        <button
-                          className="homeButton"
-                          onClick={() => handleSubmitAnswer(surveyInstance.id, qIndex)}
-                        >
-                          Submit Answer
-                        </button>
-                        <p className='answer'>
-                           {surveyInstance.answers[qIndex] == null ? "[No Previous Answer Yet]" : "Previous Answer: " + surveyInstance.answers[qIndex]}
-                        </p>
-                        <br></br>
-                        <br></br>
-                      </div>
+                      {expanded[index] &&
+                        surveyInstance.questions.map((question, qIndex) => (
+                          <div>
+                          <div>
+                            <div key={qIndex} className="survey-question">
+                              <h4>{question}</h4>
+                              <Textarea
+                                className="surveyTextarea"
+                                placeholder="Your Answer goes here..."
+                                value={answers[surveyInstance.id]?.[qIndex] || ''}
+                                onChange={(e) =>
+                                  handleAnswerChange(surveyInstance.id, qIndex, e.target.value)
+                                }
+                              />
+                              <br></br>
+                              <div className={"answer-status " + surveyInstance.id + " " + qIndex}></div>
+                              <br></br>
+                              <button
+                                className="homeButton"
+                                onClick={() => handleSubmitAnswer(surveyInstance.id, qIndex)}
+                              >
+                                Submit Answer
+                              </button>
+                              <p className='answer'>
+                                {surveyInstance.answers[qIndex] == null ? "[No Previous Answer Yet]" : "Previous Answer: " + surveyInstance.answers[qIndex]}
+                              </p>
+                              <br></br>
+                            </div>
+                          </div>
+                          <br></br>
+                          <br></br>
+                          </div>
+                        ))}
                       <br></br>
+                      <br></br>
+                            <div className={"survey-status " + surveyInstance.id}></div>
+                            <br></br>
+                            <button
+                              className="homeButton"
+                              onClick={() => handleSubmitSurvey(surveyInstance.id)}
+                            >
+                              Finish Survey
+                            </button>
                       </div>
-                    ))}
-                    <br></br>
-                    </div>
-                    <div className={"survey-status "+surveyInstance.id}></div>
-                    <br></br>
-                  <button
-                    className="homeButton"
-                    onClick={() => handleSubmitSurvey(surveyInstance.id)}
-                  >
-                    Submit Whole Survey
-                  </button>
                 </div>
                 <br></br>
               </div>
