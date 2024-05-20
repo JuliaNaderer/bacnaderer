@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   background-color: #9f9f9f;
+  min-height: 1400px;
 }
 
 .App-logo {
@@ -232,8 +233,8 @@
 .schedulerComponent {
   display: flex;
   flex-direction: column;
-  max-width: 70%;
-  margin-left: 15%;
+  max-width: 60%;
+  margin-left: 20%;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
@@ -273,6 +274,7 @@
 .surveyTextarea{
   width: 90%;
   min-height: 150px;
+  height: 150px;
   padding: 10px;
   border: 2px solid #ccc;
   border-radius: 5px;
@@ -293,4 +295,69 @@
 .mood-status{
   font-size: medium;
   color: black;
+}
+=======
+.expand-icon{
+  margin-left: 10px; /* Add margin to separate icon from text */
+}
+
+.feedback-done,
+.survey-title {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: center; /* Center items horizontally */
+  cursor: pointer; /* Add pointer cursor for better UX */
+}
+
+.pollicon {
+  margin-right: 10px; /* Add margin to separate icon from text */
+}
+
+.answer-status,
+.feedback-status,
+.survey-status{
+  font-size: small;
+}
+
+.feedback-container {
+  margin: 20px auto;
+  max-width: 60%;
+  padding: 20px;
+  border: 4px solid rgb(71, 68, 12);
+  border-radius: 10px;
+  height: 100%;
+}
+
+.feedback-section {
+  margin-bottom: 20px;
+}
+
+.feedback-textarea {
+  width: 90%;
+  background-color: white;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 5%;
+}
+
+.feedback-header {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.smiley-rating {
+  margin-bottom: 20px;
+}
+
+.selected {
+  color: rgb(37, 107, 218);
+}
+
+.submit-button {
+  margin-top: 20px;
 }

@@ -9,6 +9,7 @@ import { MoodTrackPage } from './pages/MoodTrackPage';
 import { SchedulePage } from './pages/SchudlePage';
 import { SurveyPage } from './pages/SurveyPage';
 import { DashboardPage } from "./pages/DashboardPage";
+import { FeedbackPage } from "./pages/FeedbackPage";
 
 export const RoutesComponent = () => {
     return (
@@ -23,6 +24,7 @@ export const RoutesComponent = () => {
                 <Route path="/otp" element={<OTPPage />} />
                 <Route path="/appointments" element={<SchedulePage />} />
                 <Route path="/moodtracker" element={<MoodTrackPage />} />
+                <Route path="/feedback" element={<FeedbackPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>

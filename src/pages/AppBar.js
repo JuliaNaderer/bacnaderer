@@ -21,6 +21,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import PollIcon from '@mui/icons-material/Poll';
 import LogoutIcon from '@mui/icons-material/Logout';
+import FeedbackIcon from '@mui/icons-material/Feedback';
 import {signOut, onAuthStateChanged} from "firebase/auth";
 import {auth} from "../firebase.js";
 import { useNavigate } from 'react-router-dom';
@@ -127,7 +128,12 @@ export default function PersistentDrawerLeft() {
     {
     title:'Moodtracker',
     href:'/moodtracker',
-    index:3}];
+    index:3},
+    {
+      title:'Feedback',
+      href:'/feedback',
+      index:4}
+    ];
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -176,6 +182,7 @@ export default function PersistentDrawerLeft() {
                   {data.index === 1 ? <CalendarMonthIcon /> : null}
                   {data.index === 2 ? <PollIcon /> : null}
                   {data.index === 3 ? <AddReactionIcon /> : null}
+                  {data.index === 4 ? <FeedbackIcon /> : null}
                 </ListItemIcon>
                 <ListItemText primary={data.title} />
               </ListItemButton>

@@ -1,9 +1,11 @@
-import {Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, getFirebaseAppointments } from "../firebase";
 import Scheduler from './Scheduler';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export const Appointments = () => {
 
@@ -16,15 +18,15 @@ export const Appointments = () => {
                 setLoading(true);
                 // Benutzer ist angemeldet, hole seine Termine
                 const userAppointments = await getFirebaseAppointments(); // Call the function to get appointments from Firebase
-                if(userAppointments != null){
-                userAppointments.forEach(element => {
-                        element.startDate = new Date(element.startDate.seconds*1000);
-                        element.endDate = new Date(element.endDate.seconds*1000);
-                });
+                if (userAppointments != null) {
+                    userAppointments.forEach(element => {
+                        element.startDate = new Date(element.startDate.seconds * 1000);
+                        element.endDate = new Date(element.endDate.seconds * 1000);
+                    });
 
-                setAppointments(userAppointments);
-                setLoading(false);
-            }
+                    setAppointments(userAppointments);
+                    setLoading(false);
+                }
             } else {
                 // Benutzer ist abgemeldet, leere die Termine
                 setAppointments([]);
@@ -38,14 +40,18 @@ export const Appointments = () => {
         <div>
             <br></br>
             <br></br>
-            <Typography variant="h3">Your Appointments</Typography>
             <br></br>
             <br></br>
             <br></br>
-            {isLoading ? <p>Appointments are Loading...</p> :             
-            <div className='schedulerComponent'>
-                <Scheduler appointments={appointmentsVar}/>
-            </div>}
+            {isLoading ? <div>
+                <Box>
+                    <CircularProgress />
+                </Box>
+                <p>Appointments are loading...</p>
+            </div> :
+                <div className='schedulerComponent'>
+                    <Scheduler appointments={appointmentsVar} />
+                </div>}
             <br></br>
             <br></br>
             <br></br>
