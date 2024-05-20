@@ -19,7 +19,7 @@ const emojis = [
   { emoji: '😍', label: 'Loved', color: '#FFE08C'},
   { emoji: '😊', label: 'Creative', color: '#FFE559' },
   { emoji: '😟', label: 'Lonely', color: '#A9D7D3' },
-  { emoji: '😠', label: 'Iritated', color: '#EAC117 ' },
+  { emoji: '😠', label: 'Irritated', color: '#EAC117 ' },
   { emoji: '😤', label: 'Frustrated', color: '#C62828' },
   { emoji: '😵', label: 'Lost', color: '#D670AF' },
   { emoji: '😴', label: 'Tired', color: '#474747' },

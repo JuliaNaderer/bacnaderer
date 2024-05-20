@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   background-color: #9f9f9f;
-  min-height: 1400px;
+
 }
 
 .App-logo {
@@ -42,7 +42,7 @@
 .homeButton,
 .forgotButton {
   appearance: none;
-  background-color: #256eaa;
+  background-color: #157cd1;
   border: 1px solid rgba(27, 31, 35, 0.15);
   border-radius: 6px;
   box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
@@ -98,10 +98,9 @@
 
 .loginForm {
   background-color: #9f9f9f;
-  width: 500px;
+  width: 100%;
   font-size: calc(7px + 2vmin);
-  height: 500px;
-  border-radius: 10px;
+  height: 100%;
 }
 
 .mood {
@@ -247,11 +246,13 @@
   padding: 20px;
   border: 4px solid rgb(71, 68, 12);
   border-radius: 10px;
+  background-color: #ccc;
 }
 
 .survey-question {
   border: 3px solid rgb(74, 80, 89);
   border-radius: 15px;
+  background-color: white;
 }
 
 .question {
@@ -276,7 +277,7 @@
   min-height: 150px;
   height: 150px;
   padding: 10px;
-  border: 2px solid #ccc;
+  border: 3px solid #000000;
   border-radius: 5px;
   font-size: 16px;
   outline: none;
@@ -296,7 +297,7 @@
   font-size: medium;
   color: black;
 }
-=======
+
 .expand-icon{
   margin-left: 10px; /* Add margin to separate icon from text */
 }
