@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   background-color: #9f9f9f;
-  min-height: 1400px;
+
 }
 
 .App-logo {
@@ -98,10 +98,9 @@
 
 .loginForm {
   background-color: #9f9f9f;
-  width: 500px;
+  width: 100%;
   font-size: calc(7px + 2vmin);
-  height: 600px;
-  border-radius: 10px;
+  height: 100%;
 }
 
 .mood {

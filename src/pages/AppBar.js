@@ -150,7 +150,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            <h4>Welcome, {user ? userName : "[No User Logged In]"} !</h4>
+            <h4>Welcome, {user ? userName : "[No User Logged In]"}!</h4>
           </Typography>
         </Toolbar>
       </AppBar>
