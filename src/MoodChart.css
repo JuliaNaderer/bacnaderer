@@ -1,0 +1,100 @@
+  .react-calendar-heatmap{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .react-calendar-heatmap .heatmap-rect {
+    width: 8px !important;
+    height: 8px !important;
+  }
+  
+  .react-calendar-heatmap .month-label {
+    font-size: 0.8em !important;
+    color: #ff5733 !important;
+  }
+  .react-calendar-heatmap text {
+    font-size: 5px !important;
+    fill: #fcfdfd;
+  }
+.your-container-class {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .your-item-class {
+    display: flex;
+    align-items: center;
+  }
+  
+  .your-item-class div:first-child {
+    fill-color: rgb(255, 206, 67);
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+
+  /* MoodChart.css */
+
+  .react-calendar-heatmap rect {
+    opacity: 1 !important;
+  }
+
+.color-scale-1 {
+    fill: #FFCE43 !important; /* Farbe für Stimmung 1 */
+  }
+  
+  .color-scale-2 {
+    fill: #FFC1E7 !important; /* Farbe für Stimmung 2 */
+  }
+
+  .color-scale-3 {
+    fill: #3498DB !important; /* Farbe für Stimmung 3 */
+  }
+  
+  .color-scale-4 {
+    fill: #9B59B6 !important; /* Farbe für Stimmung 4 */
+  }
+
+  .color-scale-5 {
+    fill: #90EE90 !important; /* Farbe für Stimmung 5 */
+  }
+  
+  .color-scale-6 {
+    fill: #E74C3C !important; /* Farbe für Stimmung 6 */
+  }
+
+  .color-scale-7 {
+    fill: #38D39F !important; /* Farbe für Stimmung 7 */
+  }
+
+  .color-scale-8 {
+    fill: #F859B7 !important; /* Farbe für Stimmung 8 */
+  }
+  .color-scale-9 {
+    fill: #FFE08C !important; /* Farbe für Stimmung 9 */
+  }
+  .color-scale-10 {
+    fill: #FFE559 !important; /* Farbe für Stimmung 10 */
+  }
+  .color-scale-11 {
+    fill: #A9D7D3 !important; /* Farbe für Stimmung 10 */
+  }
+  .color-scale-12 {
+    fill: #EAC117 !important; /* Farbe für Stimmung 12 */
+  }
+  .color-scale-13 {
+    fill: #C62828 !important; /* Farbe für Stimmung 13 */
+  }
+  .color-scale-14 {
+    fill: #D670AF !important; /* Farbe für Stimmung 14 */
+  }
+
+  .color-scale-15 {
+    fill: #474747 !important; /* Farbe für Stimmung 15 */
+  }
+  .color-scale-16 {
+    fill: #9CCC65 !important; /* Farbe für Stimmung 16 */
+  }

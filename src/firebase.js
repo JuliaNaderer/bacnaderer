@@ -1,7 +1,10 @@
+import React, { useState, useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, getDocs, getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, getDoc, doc, setDoc, updateDoc, arrayUnion, serverTimestamp } from "firebase/firestore";
 import { query, where } from "firebase/firestore";
+import 'core-js/features/symbol';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAKKLtmuK7zDE5y-jT4Senhq90G5b1C_OE",
@@ -11,7 +14,6 @@ const firebaseConfig = {
   messagingSenderId: "35080155801",
   appId: "1:35080155801:web:9f2c4e7553f617b103fe08",
   measurementId: "G-142VR4C9Q1"
-
 };
 
 const app = initializeApp(firebaseConfig);
@@ -24,7 +26,6 @@ const getFirebaseAppointments = async () => {
     const qb = query(collection(db, "patients2"), where("uid", "==", currentUser.uid));
     const querySnapshot = await getDocs(qb);
     if (querySnapshot.docs.length > 0) {
-
       const appointments = querySnapshot.docs
         .flatMap((doc) => Object.values(doc.data().appointments).map((appointment) => ({ ...appointment })));
       return appointments;
@@ -33,7 +34,6 @@ const getFirebaseAppointments = async () => {
       console.log('No such patient!');
       return null;
     }
-
   } else {
     console.log('No user is signed in.');
     return null;
@@ -47,7 +47,6 @@ const getUserSurveys = async () => {
     const qb = query(collection(db, "surveys"), where("uid", "==", currentUser.uid));
     const querySnapshot = await getDocs(qb);
     if (querySnapshot.docs.length > 0) {
-
       const surveys = querySnapshot.docs.map((doc) => doc.data());
       return surveys;
     }
@@ -55,7 +54,6 @@ const getUserSurveys = async () => {
       console.log('No such patient!');
       return null;
     }
-
   } else {
     console.log('No user is signed in.');
     return null;
@@ -69,7 +67,6 @@ const getUserName = async () => {
     const qb = query(collection(db, "patients2"), where("uid", "==", currentUser.uid));
     const querySnapshot = await getDocs(qb);
     if (querySnapshot.docs.length > 0) {
-
       const name = querySnapshot.docs.map((doc) => doc.data().name);
       return name;
     }
@@ -77,17 +74,19 @@ const getUserName = async () => {
       console.log('No such patient!');
       return null;
     }
-
   } else {
     console.log('No user is signed in.');
     return null;
   }
 }
+
 const getMoodEntries = async (uid) => {
   const qb = query(collection(db, "moods"), where("uid", "==", uid));
   const querySnapshot = await getDocs(qb);
+  console.log(uid)
   if (!querySnapshot.empty) {
     const moodEntries = querySnapshot.docs.flatMap((doc) => doc.data().moodEntries);
+    console.log(moodEntries);
     return moodEntries;
   } else {
     console.log('Keine Stimmungseinträge für diesen Benutzer gefunden!');
@@ -95,24 +94,45 @@ const getMoodEntries = async (uid) => {
   }
 }
 
-const saveMoodEntries = async (moodEntries) => {
-  console.log('MoodEntry recorded!')
-  const currentUser = auth.currentUser;
-  if (currentUser) {
-    const patientDoc = doc(db, "patients", currentUser.uid);
-    const patientDataDoc = await getDoc(patientDoc);
-    if (patientDataDoc.exists()) {
-      const patientData = patientDataDoc.data();
-      patientData.moodEntries = [...(patientData.moodEntries || []), ...moodEntries];
-      await setDoc(patientDoc, patientData);
-      return patientData.moodEntries || [];
-    } else {
-      console.log('Kein solcher Patient!');
-    }
+async function addMoodEntry(user, moodEntryWithoutDate) {
+  const moodsCollection = doc(db, 'moods', user.uid);
+  const docSnap = await getDoc(moodsCollection);
+
+  if (!docSnap.exists()) {
+    await setDoc(moodsCollection, {
+      moodEntries: [{
+        ...moodEntryWithoutDate,
+        date: serverTimestamp(),
+      }]
+    });
   } else {
-    console.log('Kein Benutzer ist angemeldet.'); 
+    await updateDoc(moodsCollection, {
+      moodEntries: arrayUnion({
+        ...moodEntryWithoutDate,
+        date: serverTimestamp(),
+      }),
+    });
   }
-};
+}
+
+  const updateMoodEntry = async (moodEntry) =>
+  {
+    const currentUser = auth.currentUser;
+    // Erstellen Sie eine Abfrage, um das Dokument des Benutzers in der 'moods' Sammlung zu finden
+    const q = query(collection(db, 'moods'), where('uid', '==', currentUser.uid));
+    const querySnapshot = await getDocs(q);
+
+    // Überprüfen Sie, ob Dokumente gefunden wurden
+    if (!querySnapshot.empty) {
+      // Nehmen Sie das erste Dokument (es sollte nur ein Dokument pro Benutzer geben)
+      const userDoc = querySnapshot.docs[0];
+
+      console.log(moodEntry);
+      // Fügen Sie den Mood-Eintrag zu Firestore hinzu
+      await updateDoc(userDoc.ref, { moodEntries: arrayUnion(moodEntry) });
+
+  }
+}
 
 const submitAnswer = async (surveyId, questionIndex, answer) => {
 
@@ -210,5 +230,5 @@ const submitFeedback = async (rating, uifb, usfb, adfb) => {
 };
 
 export default app;
-export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, saveMoodEntries, submitAnswer, submitSurvey, updateStatus, submitFeedback};
+export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, addMoodEntry, updateMoodEntry, saveMoodEntries, submitAnswer, submitSurvey, updateStatus, submitFeedback};
 export { db };

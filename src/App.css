@@ -115,6 +115,7 @@
 }
 
 .moodHeadline {
+  font-size: 1em;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -291,6 +292,11 @@
   color: #414241;
 }
 
+.mood-status{
+  font-size: medium;
+  color: black;
+}
+=======
 .expand-icon{
   margin-left: 10px; /* Add margin to separate icon from text */
 }

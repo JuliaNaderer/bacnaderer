@@ -1,56 +1,82 @@
-import { ResponsiveLine } from '@nivo/line'
+import React, { useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import CalendarHeatmap from 'react-calendar-heatmap';
+import 'react-calendar-heatmap/dist/styles.css';
+import '../MoodChart.css';
+import firebase from 'firebase/app';
+import { Timestamp } from 'firebase/firestore';
+import { scaleOrdinal } from 'd3-scale';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 
-const MoodChart = ({ moods }) => {
-  console.log('Moods:', moods); // Hier wird der Inhalt von moods in der Konsole ausgegeben
+const MoodChart = ({ moods, emojis }) => {
+  const currentDate = new Date();
+  const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+  const colorScale = scaleOrdinal()
+    .domain(moods.map((moodEntry) => moodEntry.mood))
+    .range(moods.map((moodEntry) => moodEntry.color));
 
-  // Konvertieren Sie die moods-Daten in das benötigte Format
-  const data = [
-    {
-      id: 'mood',
-      color: 'hsl(169, 70%, 50%)',
-      data: moods.map((mood, index) => ({
-        x: index,
-        y: mood.mood,
-      })),
-    },
-  ];
+  const [startDate, setStartDate] = useState(firstDayOfMonth);
+  const [endDate, setEndDate] = useState(currentDate);
+
+  const data = moods
+    .map(mood => {
+      if (mood.date instanceof Timestamp) {
+        const date = mood.date.toDate();
+        const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
+        return {
+          date: formattedDate,
+          count: mood.mood + 1,
+          color: mood.color,
+        };
+      } else {
+        console.error('mood.date ist kein Firestore-Zeitstempel:', mood.date);
+        return null; // Rückgabe null, wenn mood.date kein Timestamp ist
+      }
+    })
+    .filter(Boolean); // Entfernen Sie alle null-Werte aus dem Array
+
+  const filteredData = data.filter(d => new Date(d.date) >= startDate && new Date(d.date) <= endDate);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      document.querySelectorAll('.react-calendar-heatmap rect').forEach((rect) => {
+        const dataObj = filteredData.find(d => d.date === rect.getAttribute('data-for-date'));
+        if (dataObj) {
+          rect.setAttribute('style', `fill: ${dataObj.color} !important;`);
+        }
+      });
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
+  }, [filteredData]);
+
+  console.log(filteredData);
 
   return (
-    <div style={{ height: '400px' }}>
-      <ResponsiveLine
-        data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: 'point' }}
-        yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          orient: 'bottom',
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'index',
-          legendOffset: 36,
-          legendPosition: 'middle'
+    <div>
+      <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+      <DatePicker selected={endDate} onChange={date => setEndDate(date)} />
+      <CalendarHeatmap
+        startDate={startDate}
+        endDate={endDate}
+        gutterSize={1}
+        values={filteredData.map(entry => ({
+          ...entry,
+          color: entry.color, // Verwenden Sie die Farbe aus dem moodEntry
+        }))}
+        classForValue={(value) => {
+          if (!value) {
+            return 'color-empty';
+          }
+          return `color-scale-${value.count}`;
         }}
-        axisLeft={{
-          orient: 'left',
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: 'mood',
-          legendOffset: -40,
-          legendPosition: 'middle'
+        tooltipDataAttrs={(value) => {
+          // optional: fügen Sie hier benutzerdefinierte Attribute hinzu
+          return { 'data-tip': `${value.date}: ${value.label}` };
         }}
-        colors={{ scheme: 'nivo' }}
-        pointSize={10}
-        pointColor={{ theme: 'background' }}
-        pointBorderWidth={2}
-        pointBorderColor={{ from: 'serieColor' }}
-        pointLabel="y"
-        pointLabelYOffset={-12}
-        useMesh={true}
       />
+      <ReactTooltip />
     </div>
   );
 };
