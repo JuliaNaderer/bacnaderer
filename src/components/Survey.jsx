@@ -7,14 +7,15 @@ import { auth, getUserSurveys, submitAnswer, submitSurvey, updateStatus } from '
 import '../App.css';
 import ScreenRotationIcon from '@mui/icons-material/ScreenRotation';
 import PollIcon from '@mui/icons-material/Poll';
-import { srRS } from '@mui/material/locale';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export const Survey = () => {
   const [expanded, setExpanded] = useState({});
   const [isLoading, setLoading] = useState(false);
   const [surveys, setSurveys] = useState([]);
   const [answers, setAnswers] = useState({});
-  const [isNotRotated, setNotRotated] = useState(true);
+  const [isNotRotated, setNotRotated] = useState(false);
 
   const toggleExpand = (index) => {
     setExpanded((prevState) => ({
@@ -119,7 +120,12 @@ export const Survey = () => {
       <ScreenRotationIcon/>
       <h4>For a better experience please rotate your mobile device</h4></div> : null}
       {isLoading ? (
+        <div>
+          <Box>
+            <CircularProgress />
+         </Box>
         <p>Surveys are loading...</p>
+        </div>
       ) : (
         <div>
           {surveys.map((surveyInstance, index) => (

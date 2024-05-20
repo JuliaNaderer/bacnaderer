@@ -5,7 +5,8 @@ import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/fire
 import { getMoodEntries, saveMoodEntries } from '../firebase';
 import { updateDoc, doc, arrayUnion } from 'firebase/firestore';
 import MoodChart from './MoodChart';
-
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const auth = getAuth();
 const db = getFirestore();
@@ -59,7 +60,12 @@ export const Mood = ({ uid }) => {
   return (
     <div>
       {isLoading ? (
-        <p>Loading...</p>
+                <div>
+                <Box>
+                  <CircularProgress />
+               </Box>
+              <p>Moodtracker is loading...</p>
+              </div>
       ) : (
         <div className='mood'>
           <h3 className='moodHeadline'>Select your current mood:</h3>
