@@ -1,60 +1,60 @@
 import React, { useState } from 'react';
-import {createUserWithEmailAndPassword} from "firebase/auth";
-import {sendEmailVerification} from "firebase/auth";
-import {auth} from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
+import { auth } from "../firebase";
 import '../App.css';
 
 export const Register = () => {
 
-    const [registerEmail, setRegisterEmail] = useState("");
-    const [registerPassword, setRegisterPassword] = useState("");
-  
-    const clearStatus = () => {
-      var loginStatus = document.getElementById("registerStatus");
-      loginStatus.innerHTML = "";
-    }
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
 
-    const register = async () => {
+  const clearStatus = () => {
+    var loginStatus = document.getElementById("registerStatus");
+    loginStatus.innerHTML = "";
+  }
 
-      try {
-        const user = await createUserWithEmailAndPassword(
-          auth,
-          registerEmail,
-          registerPassword
-        );
-        sendEmailVerification(user.user)
-        document.getElementById("registerStatus").innerHTML = "Please verify your Email before logging in";
-        console.log(user);
-      } catch (error) {
-        console.log(error.message);
-        if(error.code === "auth/email-already-in-use"){
-          document.getElementById("registerStatus").innerHTML= "User already exists";
-        }
+  const register = async () => {
+
+    try {
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        registerEmail,
+        registerPassword
+      );
+      sendEmailVerification(user.user)
+      document.getElementById("registerStatus").innerHTML = "Please verify your Email before logging in";
+      console.log(user);
+    } catch (error) {
+      console.log(error.message);
+      if (error.code === "auth/email-already-in-use") {
+        document.getElementById("registerStatus").innerHTML = "User already exists";
       }
-    };
-  
-    return (
-      <div className="App">
-        <header  className="App-header">
+    }
+  };
+
+  return (
+    <div className="App">
+      <header className="App-header">
         <img src='../puk.png' alt="puk1"></img>
         <div className="loginForm">
-        <div>
+          <div>
             <h3> Register User </h3>
             <input className="input"
-            placeholder="Your Email Address"
-            onClick={(clearStatus)}
-            onChange={(event) => {
+              placeholder="Your Email Address"
+              onClick={(clearStatus)}
+              onChange={(event) => {
                 setRegisterEmail(event.target.value);
-            }}
+              }}
             />
             <br></br>
             <br></br>
             <input className="input"
-            type="password"
-            placeholder="Your Strong Password"
-            onChange={(event) => {
+              type="password"
+              placeholder="Your Strong Password"
+              onChange={(event) => {
                 setRegisterPassword(event.target.value);
-            }}
+              }}
             />
             <br></br>
             <button className="homeButton" onClick={register}> Register</button>
@@ -64,9 +64,9 @@ export const Register = () => {
             <a className="homeButton" id='link' href="../login"> Back To Login</a>
             <br></br>
             <br></br>
-            </div>
+          </div>
         </div>
-        </header>
-      </div>
-    );
-  }
+      </header>
+    </div>
+  );
+}

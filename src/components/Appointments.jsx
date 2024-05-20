@@ -1,69 +1,63 @@
-import { Button, Container, Typography } from '@mui/material';
-import React, { useState, useEffect, useRef } from 'react';
-import DatePicker from 'react-datepicker';
+import { Typography } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, getFirebaseAppointments } from "../firebase";
-
+import Scheduler from './Scheduler';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export const Appointments = () => {
 
     const [appointmentsVar, setAppointments] = useState([]);
-    const myDivRef = useRef(null); // Create a ref for the div
+    const [isLoading, setLoading] = useState([]);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
+                setLoading(true);
                 // Benutzer ist angemeldet, hole seine Termine
                 const userAppointments = await getFirebaseAppointments(); // Call the function to get appointments from Firebase
-                setAppointments(userAppointments);
+                if (userAppointments != null) {
+                    userAppointments.forEach(element => {
+                        element.startDate = new Date(element.startDate.seconds * 1000);
+                        element.endDate = new Date(element.endDate.seconds * 1000);
+                    });
+
+                    setAppointments(userAppointments);
+                    setLoading(false);
+                }
             } else {
                 // Benutzer ist abgemeldet, leere die Termine
                 setAppointments([]);
             }
         });
-    
         // Aufräumen bei Unmount
         return () => unsubscribe();
     }, []);
 
-    const handleCancel = (id: string) => {
-        // Code to cancel an appointment
-        console.log(`Appointment with ID ${id} has been canceled.`);
-    };
-
-    const handleChange = (id: string) => {
-        // Code to change an appointment
-        console.log(`Appointment with ID ${id} has been changed.`);
-    };
-
-    const handleDateChange = (date: Date) => {
-        // Code to handle date change
-        console.log('Selected date:', date);
-    };
-
-    const handleDateCancel = (date: Date) => {
-        // Code to handle date change
-        console.log('Selected date:', date);
-    };
-
     return (
         <div>
-            <Typography variant="h1">Appointments</Typography>
-            <Container>
-                <DatePicker selected={new Date()} onChange={handleDateChange} />
-                        <br></br>
-                        <br></br>
-                        {appointmentsVar.map((appointment, index) => (
-                             <div className='border' key={index}>
-                                <h2>{appointment.name}</h2>
-                                <p>{appointment.date}</p>
-                                <p>{appointment.time}</p>
-                                <p>{appointment.psychiatrist}</p>
-                            </div>
-))}
-            </Container>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            {isLoading ? <div>
+                <Box>
+                    <CircularProgress />
+                </Box>
+                <p>Appointments are loading...</p>
+            </div> :
+                <div className='schedulerComponent'>
+                    <Scheduler appointments={appointmentsVar} />
+                </div>}
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
         </div>
     );
 };

@@ -1,22 +1,19 @@
-import { signOut} from "firebase/auth";
-import {} from "firebase/auth";
-import {auth} from "../firebase.js";
+import { signOut } from "firebase/auth";
+import { } from "firebase/auth";
+import { auth } from "../firebase.js";
 import '../App.css';
-import { useHistory } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export const SignOut = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
 
   const logout = async () => {
     await signOut(auth);
-    history.push("/login");
+    navigate("/login");
   };
 
   return (
-    <div className="App">
-      <br></br>
-      <button className="homeButton" onClick={logout}> Sign Out </button>
-    </div>
+    <a onClick={logout}></a>
   );
 }

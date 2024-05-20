@@ -1,6 +1,7 @@
 .App {
   text-align: center;
-  background-color: #4c4f4d;
+  background-color: #9f9f9f;
+  min-height: 1400px;
 }
 
 .App-logo {
@@ -38,23 +39,22 @@
   }
 }
 
-/* CSS */
-.homeButton{
+.homeButton,
+.forgotButton {
   appearance: none;
   background-color: #256eaa;
-  border: 1px solid rgba(27, 31, 35, .15);
+  border: 1px solid rgba(27, 31, 35, 0.15);
   border-radius: 6px;
-  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-shadow: rgba(27, 31, 35, 0.1) 0 1px 0;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: 14px;
   font-weight: 600;
   line-height: 16px;
   padding: 6px 16px;
-  margin-top:  25px;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -63,91 +63,40 @@
   touch-action: manipulation;
   vertical-align: middle;
   white-space: nowrap;
-  width: 185px;
 }
 
-.homeButton:focus:not(:focus-visible):not(.focus-visible) {
-  box-shadow: none;
-  outline: none;
-}
-
-.homeButton:hover {
-  background-color: #256eaa;
-}
-
-.homeButton:focus {
-  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
-  outline: none;
-}
-
-.homeButton:disabled {
-  background-color: #256eaa;
-  border-color: rgba(27, 31, 35, .1);
-  color: rgba(255, 255, 255, .8);
-  cursor: default;
-}
-
-.homeButton:active {
-  background-color: #256eaa;
-  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
-}
-
-.forgotButton{
-  appearance: none;
-  background-color: #256eaa;
-  border: 1px solid rgba(27, 31, 35, .15);
-  border-radius: 6px;
-  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 8px;
-  padding: 6px 16px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  -webkit-user-select: none;
-  user-select: none;
-  touch-action: manipulation;
-  vertical-align: middle;
-  white-space: nowrap;
-  width: auto;
-  height: 20px;
-  margin-right: 60px;
-  margin-top: 15px;
-}
-
+.homeButton:focus:not(:focus-visible):not(.focus-visible),
 .forgotButton:focus:not(:focus-visible):not(.focus-visible) {
   box-shadow: none;
   outline: none;
 }
 
+.homeButton:hover,
 .forgotButton:hover {
   background-color: #256eaa;
 }
 
+.homeButton:focus,
 .forgotButton:focus {
-  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+  box-shadow: rgba(46, 164, 79, 0.4) 0 0 0 3px;
   outline: none;
 }
 
+.homeButton:disabled,
 .forgotButton:disabled {
   background-color: #256eaa;
-  border-color: rgba(27, 31, 35, .1);
-  color: rgba(255, 255, 255, .8);
+  border-color: rgba(27, 31, 35, 0.1);
+  color: rgba(255, 255, 255, 0.8);
   cursor: default;
 }
 
+.homeButton:active,
 .forgotButton:active {
   background-color: #256eaa;
-  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+  box-shadow: rgba(20, 70, 32, 0.2) 0 1px 0 inset;
 }
 
-.loginForm{
+.loginForm {
   background-color: #9f9f9f;
   width: 500px;
   font-size: calc(7px + 2vmin);
@@ -155,8 +104,8 @@
   border-radius: 10px;
 }
 
-.mood{
-  background-color: #4c4f4d;
+.mood {
+  background-color: #9f9f9f;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -165,18 +114,19 @@
   height: 1000px;
 }
 
-.moodHeadline{
+.moodHeadline {
+  font-size: 1em;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.moodemojis{
+.moodemojis {
   display: flex;
   top: 50%;
 }
 
-.label{
+.label {
   font-size: calc(2px + 2vmin);
 }
 
@@ -184,7 +134,7 @@
   border-radius: 10px;
   outline: 2px solid #256eaa;
   border: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: #e2e2e2;
   outline-offset: 4px;
   padding: 10px 1rem;
@@ -195,10 +145,10 @@
 
 .input:focus {
   outline-offset: 5px;
-  background-color: #fff
+  background-color: #fff;
 }
 
-.notFound{
+.notFound {
   background-color: #4c4f4d;
   min-height: 100vh;
   display: flex;
@@ -218,81 +168,196 @@
   color: black;
 }
 
-.otp-container{
+.otp-container {
   color: black;
 }
 
-.phoneInput{
+.phoneInput {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   font-size: calc(10px + 2vmin);
   color: black;
 }
 
-.flag-dropdown{
+.flag-dropdown {
   display: flex;
   margin-right: 270px;
 }
 
-#loginstatus{
+#loginstatus,
+#registerStatus,
+#emailstatus {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(5px + 1vmin);
-  color:rgb(130, 10, 10)
 }
 
-#registerStatus{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(5px + 1vmin);
-  color:rgb(0, 0, 0)
-}
-
-#emailstatus{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(5px + 1vmin);
-  color:rgb(0, 0, 0);
-  margin-top: 10px;
-}
-
-.text-password{
+.text-password {
   font-size: 15px;
   margin-right: 110px;
 }
 
-.text-email{
+.text-email {
   font-size: 15px;
   margin-right: 140px;
 }
 
-.dashback{
+.dashback {
   background-color: #9f9f9f;
   height: 1000px;
 }
 
-.logoutButton{
-  color:inherit;
+.logoutButton {
+  color: inherit;
   text-decoration: none;
 }
 
-#outer-container{
+#outer-container {
   top: 0px;
 }
 
-.welcome{
+.welcome {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.border{border-style: solid;}
+.border {
+  border-style: solid;
+}
+
+.schedulerComponent {
+  display: flex;
+  flex-direction: column;
+  max-width: 60%;
+  margin-left: 20%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  max-height: 700px;
+}
+
+.survey {
+  margin: 20px auto;
+  max-width: 60%;
+  padding: 20px;
+  border: 4px solid rgb(71, 68, 12);
+  border-radius: 10px;
+}
+
+.survey-question {
+  border: 3px solid rgb(74, 80, 89);
+  border-radius: 15px;
+}
+
+.question {
+  margin-bottom: 10px;
+}
+
+.question-title {
+  font-weight: bold;
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.surveyTextarea{
+  width: 90%;
+  min-height: 150px;
+  height: 150px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5%;
+}
+
+.answer{
+  font-style: italic;
+  color: #414241;
+}
+
+.mood-status{
+  font-size: medium;
+  color: black;
+}
+=======
+.expand-icon{
+  margin-left: 10px; /* Add margin to separate icon from text */
+}
+
+.feedback-done,
+.survey-title {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: center; /* Center items horizontally */
+  cursor: pointer; /* Add pointer cursor for better UX */
+}
+
+.pollicon {
+  margin-right: 10px; /* Add margin to separate icon from text */
+}
+
+.answer-status,
+.feedback-status,
+.survey-status{
+  font-size: small;
+}
+
+.feedback-container {
+  margin: 20px auto;
+  max-width: 60%;
+  padding: 20px;
+  border: 4px solid rgb(71, 68, 12);
+  border-radius: 10px;
+  height: 100%;
+}
+
+.feedback-section {
+  margin-bottom: 20px;
+}
+
+.feedback-textarea {
+  width: 90%;
+  background-color: white;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 5%;
+}
+
+.feedback-header {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.smiley-rating {
+  margin-bottom: 20px;
+}
+
+.selected {
+  color: rgb(37, 107, 218);
+}
+
+.submit-button {
+  margin-top: 20px;
+}

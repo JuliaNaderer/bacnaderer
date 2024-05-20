@@ -16,15 +16,16 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import PollIcon from '@mui/icons-material/Poll';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { signOut, onAuthStateChanged} from "firebase/auth";
-import {auth} from "../src/firebase.js";
+import FeedbackIcon from '@mui/icons-material/Feedback';
+import {signOut, onAuthStateChanged} from "firebase/auth";
+import {auth} from "../firebase.js";
 import { useNavigate } from 'react-router-dom';
+import { getUserName } from '../firebase';
 
 const drawerWidth = 240;
 
@@ -76,8 +77,16 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [title, setTitle] = React.useState("");
   const [user, setUser] = React.useState({});
+  const [userName, setUserName] = React.useState("");
+
+
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    await signOut(auth);
+    navigate("/login");
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -87,18 +96,22 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
-  const logout = async () => {
-    await signOut(auth);
-    navigate("/login");
-  };
-
   React.useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-  }, []);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+          // Benutzer ist angemeldet, hole seine Termine
+          const name = await getUserName(); // Call the function to get appointments from Firebase
 
-  const navigate = useNavigate;
+          setUserName(name);
+      }
+      else {
+          // Benutzer ist abgemeldet, leere die Termine
+          setUserName("");
+      }
+  });
+  // Aufräumen bei Unmount
+  return () => unsubscribe();
+}, []);
 
   const information = [{
     title:'Dashboard',
@@ -115,7 +128,12 @@ export default function PersistentDrawerLeft() {
     {
     title:'Moodtracker',
     href:'/moodtracker',
-    index:3}];
+    index:3},
+    {
+      title:'Feedback',
+      href:'/feedback',
+      index:4}
+    ];
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -132,7 +150,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            <h3>Welcome, {user ? user.email : "[No User Logged In]"} !</h3>
+            <h4>Welcome, {user ? userName : "[No User Logged In]"} !</h4>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -164,6 +182,7 @@ export default function PersistentDrawerLeft() {
                   {data.index === 1 ? <CalendarMonthIcon /> : null}
                   {data.index === 2 ? <PollIcon /> : null}
                   {data.index === 3 ? <AddReactionIcon /> : null}
+                  {data.index === 4 ? <FeedbackIcon /> : null}
                 </ListItemIcon>
                 <ListItemText primary={data.title} />
               </ListItemButton>
