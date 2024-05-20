@@ -117,7 +117,7 @@ export const Mood = () => {
           </div>
           <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
             <h2 style={{ textAlign: 'left', fontSize: '0.6em', color: 'black' }}>Legend:</h2>
-            {emojis.map(({ label, Color }, index) => (
+            {emojis.map(({ label, color }, index) => (
               <div 
                 key={index} 
                 style={{ 
@@ -127,7 +127,7 @@ export const Mood = () => {
                   flexDirection: 'row',
                   marginRight: '10px'
                 }}>
-                <div style={{ backgroundColor: Color, width: '10px', height: '10px', marginRight: '10px' }}></div>
+                <div style={{ backgroundColor: color, width: '10px', height: '10px', marginRight: '10px' }}></div>
                 <div style={{ fontSize: '0.6em', color: 'black' }}>{label}</div>
               </div>
             ))}

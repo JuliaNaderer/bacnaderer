@@ -5,50 +5,38 @@ import 'react-calendar-heatmap/dist/styles.css';
 import './MoodChart.css';
 import firebase from 'firebase/app';
 import { Timestamp } from 'firebase/firestore';
+import { scaleOrdinal } from 'd3-scale';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 
-const MoodChart = ({ moods }) => {
+const MoodChart = ({ moods, emojis }) => {
   const currentDate = new Date();
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+  const colorScale = scaleOrdinal()
+    .domain(moods.map((moodEntry) => moodEntry.mood))
+    .range(moods.map((moodEntry) => moodEntry.color));
 
   const [startDate, setStartDate] = useState(firstDayOfMonth);
   const [endDate, setEndDate] = useState(currentDate);
 
   const data = moods
-  .map(mood => {
-    if (mood.date instanceof Timestamp) {
-      const date = mood.date.toDate();
-      const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-  
-      return {
-        date: formattedDate,
-        count: mood.mood + 1,
-        color: mood.color,
-      };
-    } else {
-      console.error('mood.date ist kein Firestore-Zeitstempel:', mood.date);
-      return null; // Rückgabe null, wenn mood.date kein Timestamp ist
-    }
-  })
-  .filter(Boolean); // Entfernen Sie alle null-Werte aus dem Array
+    .map(mood => {
+      if (mood.date instanceof Timestamp) {
+        const date = mood.date.toDate();
+        const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
-const filteredData = data.filter(d => new Date(d.date) >= startDate && new Date(d.date) <= endDate);
+        return {
+          date: formattedDate,
+          count: mood.mood + 1,
+          color: mood.color,
+        };
+      } else {
+        console.error('mood.date ist kein Firestore-Zeitstempel:', mood.date);
+        return null; // Rückgabe null, wenn mood.date kein Timestamp ist
+      }
+    })
+    .filter(Boolean); // Entfernen Sie alle null-Werte aus dem Array
 
-//   const data = moods.map(mood => {
-//     if (mood.date instanceof Timestamp) {
-//       const date = mood.date.toDate();
-//       const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-  
-//       return {
-//       date: formattedDate,
-//       count: mood.mood + 1,
-//       color: mood.color,
-//     };
-// } else {
-//   console.error('mood.date ist kein Firestore-Zeitstempel:', mood.date);
-// }
-// });
-
-//   const filteredData = data.filter(d => new Date(d.date) >= startDate && new Date(d.date) <= endDate);
+  const filteredData = data.filter(d => new Date(d.date) >= startDate && new Date(d.date) <= endDate);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -59,23 +47,11 @@ const filteredData = data.filter(d => new Date(d.date) >= startDate && new Date(
         }
       });
     }, 0);
-  
+
     return () => clearTimeout(timeoutId);
   }, [filteredData]);
 
-  // useEffect(() => {
-  //   // Durchlaufen Sie alle SVG-Rechtecke
-  //   document.querySelectorAll('.react-calendar-heatmap rect').forEach((rect) => {
-  //     // Finden Sie das entsprechende Datenobjekt
-  //     const dataObj = filteredData.find(d => d.date === rect.getAttribute('data-for-date'));
-  //     if (dataObj) {
-  //       // Setzen Sie die Füllfarbe des Rechtecks auf die Farbe des Datenobjekts
-  //       rect.style.fill = dataObj.color;
-  //     }
-  //   });
-
-
-  console.log(filteredData); 
+  console.log(filteredData);
 
   return (
     <div>
@@ -85,22 +61,22 @@ const filteredData = data.filter(d => new Date(d.date) >= startDate && new Date(
         startDate={startDate}
         endDate={endDate}
         gutterSize={1}
-        tooltipDataAttrs={value => {
-          // Add title attribute to cell
-          return {
-            title: value ? `Mood: ${value.count}` : '',
-          };
-        }}
-        values={filteredData}
+        values={filteredData.map(entry => ({
+          ...entry,
+          color: entry.color, // Verwenden Sie die Farbe aus dem moodEntry
+        }))}
         classForValue={(value) => {
           if (!value) {
             return 'color-empty';
           }
-          // Ersetzen Sie alle nicht-alphanumerischen Zeichen in der Farbe durch Bindestriche
-          const colorClass = value.color.replace(/[^a-z0-9]/gi, '-');
-          return `color-scale-${colorClass}`;
+          return `color-scale-${value.count}`;
+        }}
+        tooltipDataAttrs={(value) => {
+          // optional: fügen Sie hier benutzerdefinierte Attribute hinzu
+          return { 'data-tip': `${value.date}: ${value.label}` };
         }}
       />
+      <ReactTooltip />
     </div>
   );
 };
