@@ -231,8 +231,8 @@
 .schedulerComponent {
   display: flex;
   flex-direction: column;
-  max-width: 70%;
-  margin-left: 15%;
+  max-width: 60%;
+  margin-left: 20%;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
@@ -287,4 +287,27 @@
 .answer{
   font-style: italic;
   color: #414241;
+}
+
+.expand-icon{
+  margin-left: 10px; /* Add margin to separate icon from text */
+}
+
+.survey-title {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  justify-content: center; /* Center items horizontally */
+  cursor: pointer; /* Add pointer cursor for better UX */
+}
+
+.pollicon {
+  margin-right: 10px; /* Add margin to separate icon from text */
+}
+
+.answer-status{
+  font-size: small;
+}
+
+.survey-status{
+  font-size: small;
 }

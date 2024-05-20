@@ -38,7 +38,6 @@ export const Appointments = () => {
         <div>
             <br></br>
             <br></br>
-            <Typography variant="h3">Your Appointments</Typography>
             <br></br>
             <br></br>
             <br></br>

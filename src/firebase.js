@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 import { query, where } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -114,6 +114,82 @@ const saveMoodEntries = async (moodEntries) => {
   }
 };
 
+const submitAnswer = async (surveyId, questionIndex, answer) => {
+
+  var docID; 
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    console.log(currentUser.uid);
+    const qb = query(collection(db, "surveys"), where("id", "==", surveyId));
+    const querySnapshot = await getDocs(qb);
+    if (querySnapshot.docs.length > 0) {
+      docID = querySnapshot.docs.map((doc) => ({
+        did:doc.id,
+        ...doc.data().did
+      }));
+    }}
+    docID = docID[0].did;
+
+    const surveyDocRef = doc(db, 'surveys', docID);
+    const surveyDoc = await getDoc(surveyDocRef);
+
+    if (surveyDoc.exists()) {
+      const surveyData = surveyDoc.data();
+      let answersArray = surveyData.answers || [];
+
+      // Ensure the answers array has the correct length
+      if (answersArray.length <= questionIndex) {
+        answersArray = [...answersArray, ...Array(questionIndex - answersArray.length + 1).fill('')];
+      }
+
+      console.log(questionIndex);
+      // Update the specific answer
+      answersArray[questionIndex] = answer;
+
+      // Update the document in Firestore
+      await updateDoc(surveyDocRef, {
+        answers: answersArray,
+      });
+
+      console.log('Answer submitted successfully.');
+    } else {
+      console.error('Survey not found for the given surveyId.');
+    }
+};
+
+const updateStatus = async (surveyId) => {
+
+  var docID;
+  try {
+    const qb = query(collection(db, "surveys"), where("id", "==", surveyId));
+    const querySnapshot = await getDocs(qb);
+    if (querySnapshot.docs.length > 0) {
+      docID = querySnapshot.docs.map((doc) => ({
+        did:doc.id,
+        ...doc.data().did
+      }));
+    }
+    docID = docID[0].did;
+
+    const surveyDocRef = doc(db, 'surveys', docID);
+    await updateDoc(surveyDocRef, {
+      status: 'FINISHED',
+    });
+    console.log('Survey status updated to "Done".');
+  } catch (error) {
+    console.error('Error updating survey status:', error);
+  }
+};
+
+const submitSurvey = async (surveyId, answers) => {
+  try {
+    await submitSurvey(surveyId, answers);
+    console.log('Survey submitted successfully.');
+  } catch (error) {
+    console.error('Error submitting survey:', error);
+  }
+};
+
 export default app;
-export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, saveMoodEntries};
+export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, saveMoodEntries, submitAnswer, submitSurvey, updateStatus};
 export { db };

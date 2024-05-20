@@ -6,6 +6,7 @@ export const SchedulePage = () => {
     return (
     <div className="App" id="outer-container">
         <AppBar/>
+        <h2>Appointments</h2>
         <Appointments/>
     </div>
     );
