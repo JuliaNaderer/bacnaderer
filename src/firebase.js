@@ -115,6 +115,25 @@ async function addMoodEntry(user, moodEntryWithoutDate) {
   }
 }
 
+  const updateMoodEntry = async (moodEntry) =>
+  {
+    const currentUser = auth.currentUser;
+    // Erstellen Sie eine Abfrage, um das Dokument des Benutzers in der 'moods' Sammlung zu finden
+    const q = query(collection(db, 'moods'), where('uid', '==', currentUser.uid));
+    const querySnapshot = await getDocs(q);
+
+    // Überprüfen Sie, ob Dokumente gefunden wurden
+    if (!querySnapshot.empty) {
+      // Nehmen Sie das erste Dokument (es sollte nur ein Dokument pro Benutzer geben)
+      const userDoc = querySnapshot.docs[0];
+
+      console.log(moodEntry);
+      // Fügen Sie den Mood-Eintrag zu Firestore hinzu
+      await updateDoc(userDoc.ref, { moodEntries: arrayUnion(moodEntry) });
+
+  }
+}
+
 export default app;
-export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, addMoodEntry };
+export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, addMoodEntry, updateMoodEntry };
 export { db };

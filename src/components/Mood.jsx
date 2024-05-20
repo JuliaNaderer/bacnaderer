@@ -2,8 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { getFirestore, doc, arrayUnion, serverTimestamp, setDoc, updateDoc, getDoc, collection, getDocs, where, query  } from 'firebase/firestore';
-import { getMoodEntries } from '../firebase';
+import { getMoodEntries, updateMoodEntry} from '../firebase';
 import MoodChart from './MoodChart';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const emojis = [
   { emoji: '😄', label: 'Excited', color: '#FFCE43' },
@@ -30,7 +32,7 @@ const db = getFirestore();
 export const Mood = () => {
   const [moodEntries, setMoodEntries] = useState([]);
   const [moods, setMoods] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -53,10 +55,15 @@ export const Mood = () => {
   }, []);
 
   const handleMoodSelection = async (index) => {
-    console.log(index);
     if (!user) {
       console.error('Kein Benutzer ist angemeldet.');
       return;
+    }
+  
+    // Access the first element with the class "mood-status"
+    const moodStatusElement = document.getElementsByClassName("mood-status")[0];
+    if (moodStatusElement) {
+      moodStatusElement.innerHTML = "\"" + emojis[index].label + "\"" + " mood tracked";
     }
   
     const moodEntry = {
@@ -66,31 +73,31 @@ export const Mood = () => {
       color: emojis[index].color, // Zugriff auf das Farbfeld mit einem Großbuchstaben "C"
     };
   
-    // Erstellen Sie eine Abfrage, um das Dokument des Benutzers in der 'moods' Sammlung zu finden
-    const q = query(collection(db, 'moods'), where('uid', '==', user.uid));
-    const querySnapshot = await getDocs(q);
-    
-    // Überprüfen Sie, ob Dokumente gefunden wurden
-    if (!querySnapshot.empty) {
-      // Nehmen Sie das erste Dokument (es sollte nur ein Dokument pro Benutzer geben)
-      const userDoc = querySnapshot.docs[0];
-      
-      console.log(moodEntry);
-      // Fügen Sie den Mood-Eintrag zu Firestore hinzu
-      await updateDoc(userDoc.ref, { moodEntries: arrayUnion(moodEntry) });
-  
-      setMoodEntries(prevMoodEntries => [...prevMoodEntries, moodEntry]);
-      console.log('Mood saved!');
-    } else {
-      console.error('Kein Dokument gefunden für Benutzer:', user.uid);
+    if (moodEntries.length > 1) {
+        updateMoodEntry(moodEntry);
+        setMoodEntries(prevMoodEntries => [...prevMoodEntries, moodEntry]);
+        console.log('Mood saved!');
+      } else {
+      await setDoc(doc(db, "moods", Math.random().toString(16).slice(2)), {
+        uid: user.uid,
+        moodEntries: [{
+          mID: Date.now(), // Verwenden Sie die aktuelle Zeit in Millisekunden als mID
+          mood: index + 1,
+          date: new Date(),
+          color: emojis[index].color,
+        }]
+      });
     }
-  };
+  };  
 
   return (
     <div>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
+      {isLoading ? <div><br></br><br></br>
+                <Box>
+                    <CircularProgress />
+                </Box>
+                <p>Moodtracker is loading...</p>
+            </div> : (
         <div className='mood'>
           <h3 className='moodHeadline' style={{  fontSize: '1em'}}>Select your current mood:</h3>
           <div className='moodemojis'>
@@ -107,16 +114,20 @@ export const Mood = () => {
               </div>
             ))}
           </div>
+          <br></br>
+          <div className='mood-status'></div>
           <div style={{ marginTop: '20px' }}>
-            <h2 style={{ textAlign: 'left', fontSize: '1em', color: 'black' }}>Latest moods:</h2>
-            {moods.length > 0 ? (
-              <MoodChart moods={moods} emojis={emojis} />
+          {moods.length > 0 ? (
+            <div>
+            <h2 style={{ textAlign: 'left', fontSize: '1em', color: 'white' }}>Latest moods:</h2>
+              <MoodChart moods={moods} emojis={emojis} /></div>
             ) : (
-              <div>Keine Stimmungen bisher erfasst</div>
+              <label>[No Moods Detected Yet]</label>
             )}
           </div>
+          {moods.length > 0 ? (
           <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-            <h2 style={{ textAlign: 'left', fontSize: '0.6em', color: 'black' }}>Legend:</h2>
+            <h2 style={{ textAlign: 'center', fontSize: '0.6em', color: 'black' }}>Legend:</h2>
             {emojis.map(({ label, color }, index) => (
               <div 
                 key={index} 
@@ -131,7 +142,7 @@ export const Mood = () => {
                 <div style={{ fontSize: '0.6em', color: 'black' }}>{label}</div>
               </div>
             ))}
-          </div>
+          </div>) : null}
         </div>
       )}
     </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
-import './MoodChart.css';
+import '../MoodChart.css';
 import firebase from 'firebase/app';
 import { Timestamp } from 'firebase/firestore';
 import { scaleOrdinal } from 'd3-scale';

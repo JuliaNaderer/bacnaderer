@@ -1,3 +1,9 @@
+  .react-calendar-heatmap{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+  }
+  
   .react-calendar-heatmap .heatmap-rect {
     width: 8px !important;
     height: 8px !important;
