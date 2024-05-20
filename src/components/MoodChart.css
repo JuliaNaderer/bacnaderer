@@ -29,3 +29,62 @@
     height: 20px;
     margin-right: 10px;
   }
+
+  /* MoodChart.css */
+
+.color-scale-1 {
+    background: #FFCE43; /* Farbe für Stimmung 1 */
+  }
+  
+  .color-scale-2 {
+    background: #FFC1E7; /* Farbe für Stimmung 2 */
+  }
+
+  .color-scale-3 {
+    background: #3498DB; /* Farbe für Stimmung 3 */
+  }
+  
+  .color-scale-4 {
+    background: #9B59B6; /* Farbe für Stimmung 4 */
+  }
+
+  .color-scale-5 {
+    background: #90EE90; /* Farbe für Stimmung 5 */
+  }
+  
+  .color-scale-6 {
+    background: #E74C3C; /* Farbe für Stimmung 6 */
+  }
+
+  .color-scale-7 {
+    background: #38D39F; /* Farbe für Stimmung 7 */
+  }
+
+  .color-scale-8 {
+    background: #F859B7; /* Farbe für Stimmung 8 */
+  }
+  .color-scale-9 {
+    background: #FFE08C; /* Farbe für Stimmung 9 */
+  }
+  .color-scale-10 {
+    background: #FFE559; /* Farbe für Stimmung 10 */
+  }
+  .color-scale-11 {
+    background: #A9D7D3; /* Farbe für Stimmung 10 */
+  }
+  .color-scale-12 {
+    background: #EAC117; /* Farbe für Stimmung 12 */
+  }
+  .color-scale-13 {
+    background: #C62828; /* Farbe für Stimmung 13 */
+  }
+  .color-scale-14 {
+    background: #D670AF; /* Farbe für Stimmung 14 */
+  }
+
+  .color-scale-15 {
+    background: #474747; /* Farbe für Stimmung 15 */
+  }
+  .color-scale-16 {
+    background: #9CCC65; /* Farbe für Stimmung 16 */
+  }

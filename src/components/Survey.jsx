@@ -39,7 +39,7 @@ export const Survey = () => {
   return (
     <div>
       {isLoading ? (
-        <p>Appointments are Loading...</p>
+        <p>Surveys are loading...</p>
       ) : (
         <div>
           {surveys.map((surveyInstance, index) => (

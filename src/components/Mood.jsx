@@ -1,14 +1,9 @@
 // Importe am Anfang der Datei
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged, getAuth } from "firebase/auth";
-import { Line } from 'react-chartjs-2';
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { getMoodEntries, saveMoodEntries } from '../firebase';
-import { updateDoc, doc, arrayUnion } from 'firebase/firestore';
+import { getFirestore, doc, arrayUnion, serverTimestamp, setDoc, updateDoc, getDoc, collection, getDocs, where, query  } from 'firebase/firestore';
+import { getMoodEntries } from '../firebase';
 import MoodChart from './MoodChart';
-import { color } from 'devextreme-react/cjs/chart';
-
-
 
 const emojis = [
   { emoji: '😄', label: 'Excited', Color: '#FFCE43' },
@@ -40,6 +35,7 @@ export const Mood = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        setUser(user); // Speichern Sie den Benutzer im Zustand
         setIsLoading(true);
         const moodEntries = await getMoodEntries(user.uid); // Hier verwenden wir user.uid anstatt der uid Prop
         if (moodEntries) {
@@ -55,38 +51,6 @@ export const Mood = () => {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setUser(user); // Speichern Sie den Benutzer im Zustand
-        // ...
-      } else {
-        console.error('Kein Benutzer ist angemeldet.');
-      }
-    });
-
-    // Cleanup function
-    return () => unsubscribe();
-  }, []);
-
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, async (user) => {
-  //     if (user) {
-  //       setIsLoading(true);
-  //       const moodEntries = await getMoodEntries(user.uid);
-  //       if (moodEntries) {
-  //         setMoods(moodEntries);
-  //       }
-  //       setIsLoading(false);
-  //     } else {
-  //       console.error('Kein Benutzer ist angemeldet.');
-  //     }
-  //   });
-  
-  //   // Cleanup function
-  //   return () => unsubscribe();
-  // }, []);
-
   const handleMoodSelection = async (index) => {
     if (!user) {
       console.error('Kein Benutzer ist angemeldet.');
@@ -94,45 +58,29 @@ export const Mood = () => {
     }
   
     const moodEntry = {
-      mid: moods.length, // Sie können die Länge des aktuellen moods-Arrays als mid verwenden
+      mID: moods.length, // Sie können die Länge des aktuellen moods-Arrays als mid verwenden
       mood: index + 1, // Add 1 to the index to get a number from 1 to 16
-      date: serverTimestamp(),
+      date: new Date(), // Erzeugen Sie den aktuellen Zeitstempel auf der Clientseite
     };
-    console.log('moodEntry:', moodEntry);
   
-    // Get a reference to the 'moods' collection
-    const moodsCollection = doc(db, 'moods', user.uid); // Verwenden Sie user.uid anstelle von uid
+    // Erstellen Sie eine Abfrage, um das Dokument des Benutzers in der 'moods' Sammlung zu finden
+    const q = query(collection(db, 'moods'), where('uid', '==', user.uid));
+    const querySnapshot = await getDocs(q);
     
-    // Add the mood entry to Firestore
-try {
-  // Erstelle ein neues moodEntry ohne das Datum
-  const moodEntryWithoutDate = {
-    mid: moods.length, // Sie können die Länge des aktuellen moods-Arrays als mid verwenden
-    mood: index + 1, // Add 1 to the index to get a number from 1 to 16
+    // Überprüfen Sie, ob Dokumente gefunden wurden
+    if (!querySnapshot.empty) {
+      // Nehmen Sie das erste Dokument (es sollte nur ein Dokument pro Benutzer geben)
+      const userDoc = querySnapshot.docs[0];
+  
+      // Fügen Sie den Mood-Eintrag zu Firestore hinzu
+      await updateDoc(userDoc.ref, { moods: arrayUnion(moodEntry) });
+  
+      setMoods(prevMoods => [...prevMoods, moodEntry]);
+      console.log('Mood saved!');
+    } else {
+      console.error('Kein Dokument gefunden für Benutzer:', user.uid);
+    }
   };
-
-  // Füge das Datum zum Dokument hinzu
-  await updateDoc(moodsCollection, {
-    date: serverTimestamp(),
-  });
-
-  // Füge das moodEntry zum Array hinzu
-  await updateDoc(moodsCollection, {
-    moodEntries: arrayUnion(moodEntryWithoutDate), // Change 'entries' to 'moodEntries' to match your database structure
-  });
-
-  // Füge das Datum zum lokalen moodEntry hinzu
-  const moodEntry = {
-    ...moodEntryWithoutDate,
-    date: new Date(), // Verwende das aktuelle Datum
-  };
-
-  setMoods(prevMoods => [...prevMoods, moodEntry]);
-  console.log('Mood saved!');
-} catch (error) {
-  console.error('Error saving mood:', error);
-  };
-};
 
   return (
     <div>
@@ -177,11 +125,11 @@ try {
                 }}>
                 <div style={{ backgroundColor: Color, width: '10px', height: '10px', marginRight: '10px' }}></div>
                 <div style={{ fontSize: '0.6em', color: 'black' }}>{label}</div>
-            </div>
-))}
-</div>
-</div>
-)}
-</div>
-);
-}; // Hier fehlt die schließende Klammer für die Komponentenfunktion
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
