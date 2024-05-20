@@ -190,6 +190,25 @@ const submitSurvey = async (surveyId, answers) => {
   }
 };
 
+const submitFeedback = async (rating, uifb, usfb, adfb) => {
+  const currentUser = auth.currentUser;
+  const did = Math.random().toString(16).slice(2)
+
+  try {
+    
+    await setDoc(doc(db, "feedback", did), {
+      uid: currentUser.uid,
+      rating: rating,
+      uifb: uifb,
+      usfb: usfb,
+      adfb: adfb
+    });
+    console.log('Survey submitted successfully.');
+  } catch (error) {
+    console.error('Error submitting survey:', error);
+  }
+};
+
 export default app;
-export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, saveMoodEntries, submitAnswer, submitSurvey, updateStatus};
+export { auth, getFirebaseAppointments, getUserSurveys, getUserName, getMoodEntries, saveMoodEntries, submitAnswer, submitSurvey, updateStatus, submitFeedback};
 export { db };

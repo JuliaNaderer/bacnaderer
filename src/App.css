@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   background-color: #9f9f9f;
-  min-height: 1200px;
+  min-height: 1400px;
 }
 
 .App-logo {
@@ -273,6 +273,7 @@
 .surveyTextarea{
   width: 90%;
   min-height: 150px;
+  height: 150px;
   padding: 10px;
   border: 2px solid #ccc;
   border-radius: 5px;
@@ -294,6 +295,7 @@
   margin-left: 10px; /* Add margin to separate icon from text */
 }
 
+.feedback-done,
 .survey-title {
   display: flex;
   align-items: center; /* Align items vertically */
@@ -305,10 +307,8 @@
   margin-right: 10px; /* Add margin to separate icon from text */
 }
 
-.answer-status{
-  font-size: small;
-}
-
+.answer-status,
+.feedback-status,
 .survey-status{
   font-size: small;
 }
@@ -349,7 +349,7 @@
 }
 
 .selected {
-  color: yellow;
+  color: rgb(37, 107, 218);
 }
 
 .submit-button {

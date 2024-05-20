@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@mui/material';
-import { MoodBad, Mood, SentimentDissatisfied, SentimentSatisfied, SentimentVeryDissatisfied, SentimentVerySatisfied } from '@mui/icons-material';
+import { MoodBad, Mood, SentimentDissatisfied, SentimentSatisfied, SentimentVeryDissatisfied, SentimentVerySatisfied, Check } from '@mui/icons-material';
+import { submitFeedback } from '../firebase';
+import CheckIcon from '@mui/icons-material/Check';
 import '../App.css'; // Make sure to import your CSS file
 
 export const Feedback = () => {
@@ -8,6 +10,7 @@ export const Feedback = () => {
   const [uiDesignFeedback, setUiDesignFeedback] = useState('');
   const [usabilityFeedback, setUsabilityFeedback] = useState('');
   const [additionalFeedback, setAdditionalFeedback] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
   const handleRatingChange = (rating) => {
     setOverallRating(rating);
@@ -19,6 +22,11 @@ export const Feedback = () => {
     console.log('UI Design Feedback:', uiDesignFeedback);
     console.log('Usability Feedback:', usabilityFeedback);
     console.log('Additional Feedback:', additionalFeedback);
+
+
+    submitFeedback(overallRating, uiDesignFeedback, usabilityFeedback, additionalFeedback);
+    setSubmitted(true);
+
     // Clearing state after submission
     setOverallRating(0);
     setUiDesignFeedback('');
@@ -27,10 +35,13 @@ export const Feedback = () => {
   };
 
   return (
+    <div>
+    {submitted ? <div className='feedback-done'>
+        <h1>Feedback Received - Thank you for taking the time!</h1></div> : 
     <div className="feedback-container">
       <h2 className="feedback-header">We'd love to hear from you!</h2>
       <div className="rating-section">
-        <h3>Overall Happiness Rating</h3>
+        <h3>Overall Rating</h3>
         <div className="smiley-rating">
           <MoodBad onClick={() => handleRatingChange(1)} className={overallRating >= 1 ? 'selected' : ''} />
           <SentimentDissatisfied onClick={() => handleRatingChange(2)} className={overallRating >= 2 ? 'selected' : ''} />
@@ -40,7 +51,7 @@ export const Feedback = () => {
         </div>
       </div>
       <div className="feedback-section">
-        <h3>UI Design Feedback</h3>
+        <h3>UI Design Feedback (e.g. Color Combinations, Elements, Dashboard) </h3>
         <TextField
           id="ui-design-feedback"
           className="feedback-textarea"
@@ -53,7 +64,7 @@ export const Feedback = () => {
         />
       </div>
       <div className="feedback-section">
-        <h3>Usability Feedback</h3>
+        <h3>Usability Feedback (e.g. Was it easy to use/find, ...)</h3>
         <TextField
           id="usability-feedback"
           className="feedback-textarea"
@@ -78,6 +89,9 @@ export const Feedback = () => {
           placeholder="Any additional feedback..."
         />
       </div>
+      <br></br>
+      <div className='feedback-status'></div>
+      <br></br>
       <Button
         variant="contained"
         color="primary"
@@ -85,6 +99,7 @@ export const Feedback = () => {
       >
         Submit Feedback
       </Button>
+    </div>}
     </div>
   );
-};
+}
