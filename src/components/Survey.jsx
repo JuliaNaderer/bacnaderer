@@ -118,7 +118,7 @@ export const Survey = () => {
       </div>
       { isNotRotated == true ? <div>
       <ScreenRotationIcon/>
-      <h4>For a better experience please rotate your mobile device</h4></div> : null}
+      <h4>For a better experience please rotate your mobile device & reload the page! </h4></div> : null}
       {isLoading ? (
         <div>
           <Box>
