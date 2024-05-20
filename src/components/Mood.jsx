@@ -6,28 +6,29 @@ import { getMoodEntries } from '../firebase';
 import MoodChart from './MoodChart';
 
 const emojis = [
-  { emoji: '😄', label: 'Excited', Color: '#FFCE43' },
-  { emoji: '😃', label: 'Happy', Color: '#FFC1E7' },
-  { emoji: '😞', label: 'Sad', Color: '#3498DB' },
-  { emoji: '😔', label: 'Dissapointed', Color: '#9B59B6' },
-  { emoji: '😌', label: 'Calm', Color: '#90EE90' },
-  { emoji: '😰', label: 'Anxious', Color: '#E74C3C' }, 
-  { emoji: '😒', label: 'Jealous', Color: '#38D39F' },
-  { emoji: '😀', label: 'Energetic', Color: '#F859B7' },
-  { emoji: '😍', label: 'Loved', Color: '#FFE08C'},
-  { emoji: '😊', label: 'Creative', Color: '#FFE559' },
-  { emoji: '😟', label: 'Lonely', Color: '#A9D7D3' },
-  { emoji: '😠', label: 'Iritated', Color: '#EAC117 ' },
-  { emoji: '😤', label: 'Frustrated', Color: '#C62828' },
-  { emoji: '😵', label: 'Lost', Color: '#D670AF' },
-  { emoji: '😴', label: 'Tired', Color: '#474747' },
-  { emoji: '😇', label: 'Grateful', Color:'#9CCC65' },
+  { emoji: '😄', label: 'Excited', color: '#FFCE43' },
+  { emoji: '😃', label: 'Happy', color: '#FFC1E7' },
+  { emoji: '😞', label: 'Sad', color: '#3498DB' },
+  { emoji: '😔', label: 'Dissapointed', color: '#9B59B6' },
+  { emoji: '😌', label: 'Calm', color: '#90EE90' },
+  { emoji: '😰', label: 'Anxious', color: '#E74C3C' }, 
+  { emoji: '😒', label: 'Jealous', color: '#38D39F' },
+  { emoji: '😀', label: 'Energetic', color: '#F859B7' },
+  { emoji: '😍', label: 'Loved', color: '#FFE08C'},
+  { emoji: '😊', label: 'Creative', color: '#FFE559' },
+  { emoji: '😟', label: 'Lonely', color: '#A9D7D3' },
+  { emoji: '😠', label: 'Iritated', color: '#EAC117 ' },
+  { emoji: '😤', label: 'Frustrated', color: '#C62828' },
+  { emoji: '😵', label: 'Lost', color: '#D670AF' },
+  { emoji: '😴', label: 'Tired', color: '#474747' },
+  { emoji: '😇', label: 'Grateful', color:'#9CCC65' },
 ];
 
 const auth = getAuth();
 const db = getFirestore();
 
 export const Mood = () => {
+  const [moodEntries, setMoodEntries] = useState([]);
   const [moods, setMoods] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
@@ -52,15 +53,17 @@ export const Mood = () => {
   }, []);
 
   const handleMoodSelection = async (index) => {
+    console.log(index);
     if (!user) {
       console.error('Kein Benutzer ist angemeldet.');
       return;
     }
   
     const moodEntry = {
-      mID: moods.length, // Sie können die Länge des aktuellen moods-Arrays als mid verwenden
-      mood: index + 1, // Add 1 to the index to get a number from 1 to 16
-      date: new Date(), // Erzeugen Sie den aktuellen Zeitstempel auf der Clientseite
+      mID: Date.now(), // Verwenden Sie die aktuelle Zeit in Millisekunden als mID
+      mood: index + 1,
+      date: new Date(),
+      color: emojis[index].color, // Zugriff auf das Farbfeld mit einem Großbuchstaben "C"
     };
   
     // Erstellen Sie eine Abfrage, um das Dokument des Benutzers in der 'moods' Sammlung zu finden
@@ -71,11 +74,12 @@ export const Mood = () => {
     if (!querySnapshot.empty) {
       // Nehmen Sie das erste Dokument (es sollte nur ein Dokument pro Benutzer geben)
       const userDoc = querySnapshot.docs[0];
-  
+      
+      console.log(moodEntry);
       // Fügen Sie den Mood-Eintrag zu Firestore hinzu
-      await updateDoc(userDoc.ref, { moods: arrayUnion(moodEntry) });
+      await updateDoc(userDoc.ref, { moodEntries: arrayUnion(moodEntry) });
   
-      setMoods(prevMoods => [...prevMoods, moodEntry]);
+      setMoodEntries(prevMoodEntries => [...prevMoodEntries, moodEntry]);
       console.log('Mood saved!');
     } else {
       console.error('Kein Dokument gefunden für Benutzer:', user.uid);
