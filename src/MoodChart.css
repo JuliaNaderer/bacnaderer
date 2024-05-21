@@ -98,3 +98,15 @@
   .color-scale-16 {
     fill: #9CCC65 !important; /* Farbe für Stimmung 16 */
   }
+  .react-calendar-heatmap rect {
+    stroke: #e0e0e0;
+    transition: fill 0.3s ease;
+  }
+  
+  .mood{
+    height: auto;
+  }
+
+  .date-selected{
+    font-size: large;
+  }

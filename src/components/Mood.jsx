@@ -99,7 +99,7 @@ export const Mood = () => {
                 <p>Moodtracker is loading...</p>
             </div> : (
         <div className='mood'>
-          <h3 className='moodHeadline' style={{  fontSize: '1em'}}>Select your current mood:</h3>
+          <h3 className='moodHeadline' style={{  fontSize: '1em'}}>Select your current mood</h3>
           <div className='moodemojis'>
             {emojis.map(({ emoji, label }, index) => (
               <div
@@ -114,21 +114,23 @@ export const Mood = () => {
               </div>
             ))}
           </div>
-          <br></br>
           <div className='mood-status'></div>
           <div style={{ marginTop: '20px' }}>
           {moods.length > 0 ? (
-            <div>
-            <h2 style={{ textAlign: 'left', fontSize: '1em', color: 'white' }}>Latest moods:</h2>
+            <div className='mood-section'>
+            <h2 style={{ textAlign: 'center', fontSize: '1em', color: 'white' }}>Latest moods</h2>
               <MoodChart moods={moods} emojis={emojis} /></div>
             ) : (
               <label>[No Moods Detected Yet]</label>
             )}
           </div>
           {moods.length > 0 ? (
+          <div className='mood-legend'>
           <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
             <h2 style={{ textAlign: 'center', fontSize: '0.6em', color: 'black' }}>Legend:</h2>
+            <br></br>
             {emojis.map(({ label, color }, index) => (
+
               <div 
                 key={index} 
                 style={{ 
@@ -139,9 +141,12 @@ export const Mood = () => {
                   marginRight: '10px'
                 }}>
                 <div style={{ backgroundColor: color, width: '10px', height: '10px', marginRight: '10px' }}></div>
-                <div style={{ fontSize: '0.6em', color: 'black' }}>{label}</div>
-              </div>
+                <p style={{ fontSize: '0.6em', color: 'black' }}>{label}</p>
+                <br></br>
+                <br></br>
+            </div>
             ))}
+            </div>
           </div>) : null}
         </div>
       )}

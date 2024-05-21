@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
+import 'react-tooltip/dist/react-tooltip.css'; // Ensure you have the correct CSS import
 import '../MoodChart.css';
-import firebase from 'firebase/app';
 import { Timestamp } from 'firebase/firestore';
 import { scaleOrdinal } from 'd3-scale';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 const MoodChart = ({ moods, emojis }) => {
   const currentDate = new Date();
@@ -18,23 +17,21 @@ const MoodChart = ({ moods, emojis }) => {
   const [startDate, setStartDate] = useState(firstDayOfMonth);
   const [endDate, setEndDate] = useState(currentDate);
 
-  const data = moods
-    .map(mood => {
-      if (mood.date instanceof Timestamp) {
-        const date = mood.date.toDate();
-        const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const data = moods.map(mood => {
+    if (mood.date instanceof Timestamp) {
+      const date = mood.date.toDate();
+      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
-        return {
-          date: formattedDate,
-          count: mood.mood + 1,
-          color: mood.color,
-        };
-      } else {
-        console.error('mood.date ist kein Firestore-Zeitstempel:', mood.date);
-        return null; // Rückgabe null, wenn mood.date kein Timestamp ist
-      }
-    })
-    .filter(Boolean); // Entfernen Sie alle null-Werte aus dem Array
+      return {
+        date: formattedDate,
+        count: mood.mood + 1,
+        color: mood.color,
+      };
+    } else {
+      console.error('mood.date is not a Firestore Timestamp:', mood.date);
+      return null;
+    }
+  }).filter(Boolean);
 
   const filteredData = data.filter(d => new Date(d.date) >= startDate && new Date(d.date) <= endDate);
 
@@ -51,24 +48,23 @@ const MoodChart = ({ moods, emojis }) => {
     return () => clearTimeout(timeoutId);
   }, [filteredData]);
 
-  console.log(filteredData);
+  const showDate = (date) => {
+    document.getElementById("date-selected").innerText = date;
+  }
 
   return (
-    <div>
-      <label>Start Date</label>
-      <br></br>
-      <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
-      <br></br>
-      <label>End Date</label><br></br>
-      <DatePicker selected={endDate} onChange={date => setEndDate(date)} />
+    <div className="mood-chart">
+      <div className="date-picker-container">
+        <p className="date-label">Start Date</p>
+        <DatePicker className="datepicker" selected={startDate} onChange={date => setStartDate(date)} />
+        <p className="date-label">End Date</p>
+        <DatePicker className="datepicker" selected={endDate} onChange={date => setEndDate(date)} />
+      </div>
       <CalendarHeatmap
         startDate={startDate}
         endDate={endDate}
         gutterSize={1}
-        values={filteredData.map(entry => ({
-          ...entry,
-          color: entry.color, // Verwenden Sie die Farbe aus dem moodEntry
-        }))}
+        values={filteredData}
         classForValue={(value) => {
           if (!value) {
             return 'color-empty';
@@ -76,11 +72,15 @@ const MoodChart = ({ moods, emojis }) => {
           return `color-scale-${value.count}`;
         }}
         tooltipDataAttrs={(value) => {
-          // optional: fügen Sie hier benutzerdefinierte Attribute hinzu
-          return { 'data-tip': `${value.date}: ${value.label}` };
+          return { 'data-tip': value ? value.date : '' };
+        }}
+        onClick={(value) => {
+          if (value) {
+            showDate(value.date);
+          }
         }}
       />
-      <ReactTooltip />
+      <p id="date-selected" className="date-selected"></p>
     </div>
   );
 };
