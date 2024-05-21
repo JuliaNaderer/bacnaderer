@@ -107,18 +107,14 @@ export default class Demo extends React.PureComponent {
           />
           <MonthView />
           <DayView />
-
           <Toolbar />
           <ViewSwitcher />
           <DateNavigator />
           <TodayButton />
           <AllDayPanel />
-          <EditRecurrenceMenu />
           <ConfirmationDialog />
           <Appointments />
           <AppointmentTooltip
-            showOpenButton
-            showDeleteButton
           />
           <AppointmentForm />
         </Scheduler>

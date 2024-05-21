@@ -42,6 +42,7 @@ export const Feedback = () => {
       <h2 className="feedback-header">We'd love to hear from you!</h2>
       <div className="rating-section">
         <h3>Overall Rating</h3>
+        <p className='hint'>Hint: Click an emoji</p>
         <div className="smiley-rating">
           <MoodBad onClick={() => handleRatingChange(1)} className={overallRating >= 1 ? 'selected' : ''} />
           <SentimentDissatisfied onClick={() => handleRatingChange(2)} className={overallRating >= 2 ? 'selected' : ''} />

@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   background-color: #9f9f9f;
-
+  height: 1700px
 }
 
 .App-logo {
@@ -322,7 +322,7 @@
 
 .feedback-container {
   margin: 20px auto;
-  max-width: 60%;
+  max-width: 90%;
   padding: 20px;
   border: 4px solid rgb(71, 68, 12);
   border-radius: 10px;
@@ -361,4 +361,53 @@
 
 .submit-button {
   margin-top: 20px;
+}
+
+.mood-section{
+  width: 90%;
+}
+
+.react-calendar-heatmap{ 
+  align-items: center;
+  justify-content: center;
+  margin-left: 20%;
+}
+
+.react-calendar-heatmap-all-weeks{
+  transform: scale();
+}
+
+.moodemojis{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;/* Hide scrollbars */
+  overflow:scroll;
+  max-width: 100%;
+  word-wrap:break-word;
+  justify-content: center;
+}
+
+.mood-legend{
+  display: block;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10%;
+  line-height: 20px;
+}
+
+.date{
+  font-size: medium;
+  line-height: 5px;
+}
+
+.hint{
+  font-style: italic;
+}
+
+.datePicker{
+  line-height: 10px;
+}
+
+.date-label{
+  line-height: 0px;
+  font-size: large;
 }
