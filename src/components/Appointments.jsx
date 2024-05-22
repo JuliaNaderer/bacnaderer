@@ -27,6 +27,7 @@ export const Appointments = () => {
 
                     if(userAppointments != null){
                         setAppointments(userAppointments);
+                        setLoading(false);
                     }
                     else{
                         setAppointments([]);
