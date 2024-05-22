@@ -11,6 +11,7 @@ export const Appointments = () => {
 
     const [appointmentsVar, setAppointments] = useState([]);
     const [isLoading, setLoading] = useState([]);
+    const [isNull, setIsNull] = useState(false);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -24,9 +25,18 @@ export const Appointments = () => {
                         element.endDate = new Date(element.endDate.seconds * 1000);
                     });
 
-                    setAppointments(userAppointments);
-                    setLoading(false);
+                    if(userAppointments != null){
+                        setAppointments(userAppointments);
+                    }
+                    else{
+                        setAppointments([]);
+                    }
                 }
+                else{
+                    setLoading(false);
+                    setIsNull(true);
+                }
+
             } else {
                 // Benutzer ist abgemeldet, leere die Termine
                 setAppointments([]);
@@ -43,6 +53,8 @@ export const Appointments = () => {
             <br></br>
             <br></br>
             <br></br>
+            {isNull ? <h1>No Appointments Yet</h1> : 
+            <div>
             {isLoading ? <div>
                 <Box>
                     <CircularProgress />
@@ -51,7 +63,7 @@ export const Appointments = () => {
             </div> :
                 <div className='schedulerComponent'>
                     <Scheduler appointments={appointmentsVar} />
-                </div>}
+                </div>}</div>}
             <br></br>
             <br></br>
             <br></br>

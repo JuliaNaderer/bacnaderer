@@ -102,7 +102,12 @@ export default function PersistentDrawerLeft() {
           // Benutzer ist angemeldet, hole seine Termine
           const name = await getUserName(); // Call the function to get appointments from Firebase
 
+          if(name != null){
           setUserName(name);
+           }
+           else{
+             setUserName("[No Username Yet]")
+           }
       }
       else {
           // Benutzer ist abgemeldet, leere die Termine
