@@ -27,14 +27,12 @@ export const Appointments = () => {
 
                     if(userAppointments != null){
                         setAppointments(userAppointments);
-                        setLoading(false);
                     }
                     else{
                         setAppointments([]);
                     }
                 }
                 else{
-                    setLoading(false);
                     setIsNull(true);
                 }
 
@@ -42,6 +40,7 @@ export const Appointments = () => {
                 // Benutzer ist abgemeldet, leere die Termine
                 setAppointments([]);
             }
+            setLoading(false);
         });
         // Aufräumen bei Unmount
         return () => unsubscribe();
