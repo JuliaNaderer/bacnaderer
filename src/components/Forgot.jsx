@@ -36,6 +36,7 @@ export const Forgot = () => {
             <br></br>
             <button className='homeButton' onClick={() => ForogotPassword()}>Reset Password</button>
             <br></br>
+            <br></br>
             <a className='homeButton' id='link' href="../login"> Back To Login</a>
             <br></br>
             </div>
