@@ -53,7 +53,7 @@ export const Appointments = () => {
             <br></br>
             <br></br>
             <br></br>
-            {isNull ? <h1>No Appointments Yet</h1> : 
+            {isNull ? <h1>[No Appointments Yet]</h1> : 
             <div>
             {isLoading ? <div>
                 <Box>
