@@ -63,7 +63,7 @@ export const Mood = () => {
     // Access the first element with the class "mood-status"
     const moodStatusElement = document.getElementsByClassName("mood-status")[0];
     if (moodStatusElement) {
-      moodStatusElement.innerHTML = "\"" + emojis[index].label + "\"" + " mood tracked";
+      moodStatusElement.innerHTML = "\"" + emojis[index].label + "\"" + " mood tracked - Please reload the page";
     }
   
     const moodEntry = {

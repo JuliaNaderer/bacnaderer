@@ -90,6 +90,7 @@ export const Survey = () => {
         setLoading(true);
         try {
           const userSurveys = await getUserSurveys();
+          console.log(userSurveys);
           setSurveys(userSurveys);
         } catch (error) {
           console.error('Error fetching surveys:', error);
@@ -119,6 +120,8 @@ export const Survey = () => {
       {isNotRotated == true ? <div>
         <ScreenRotationIcon />
         <h4>For a better experience please rotate your mobile device & reload the page! </h4></div> : null}
+        {surveys == null ? <h1>[No Surveys Yet]</h1>:  
+        <div>
       {isLoading ? (
         <div>
           <Box>
@@ -199,6 +202,8 @@ export const Survey = () => {
 
         </div>
       )}
+    </div>
+    }
     </div>
   );
 };
